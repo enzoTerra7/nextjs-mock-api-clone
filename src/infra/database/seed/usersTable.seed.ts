@@ -36,4 +36,6 @@ export async function usersTableSeed() {
   await db.insert(usersTable).values(users);
 
   console.log("✅ User seeder executed!");
+
+  return users;
 }
