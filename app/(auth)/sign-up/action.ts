@@ -24,7 +24,7 @@ const signUpSchema = z
 export const signUpAction = createServerAction()
   .input(signUpSchema)
   .handler(async ({ input }) => {
-    const signUpUseCase = DiContainer.get("SignUpUseCase");
+    const signUpUseCase = DiContainer.get("SignUpUseCase")("knex");
 
     const { user } = await signUpUseCase.execute({
       ...input,

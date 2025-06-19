@@ -11,16 +11,16 @@ const resolver: {
   CryptoService: new CryptoService(),
 
   // repositories
-  get UserRepository() {
+  UserRepository() {
     return new MockUsersRepository();
   },
 
   // use cases
-  get SignInUseCase() {
-    return new SignInUseCase(this.UserRepository, this.CryptoService);
+  SignInUseCase() {
+    return new SignInUseCase(resolver.UserRepository(), resolver.CryptoService);
   },
-  get SignUpUseCase() {
-    return new SignUpUseCase(this.UserRepository, this.CryptoService);
+  SignUpUseCase() {
+    return new SignUpUseCase(resolver.UserRepository(), resolver.CryptoService);
   },
 };
 

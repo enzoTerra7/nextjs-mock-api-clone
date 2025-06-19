@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import Link from "next/link";
@@ -27,19 +26,19 @@ export default function SignIn() {
             password: form.get("password") as string,
           });
         }}
-        className="space-y-4"
-      >
+        className="space-y-4">
         <Input type="email" name="email" placeholder="E-mail" required />
         <Input type="password" name="password" placeholder="Senha" required />
         <div className="flex justify-between text-sm">
           <Link
             href="/forgot-password"
-            className="text-primary hover:underline"
-          >
+            className="text-primary hover:underline">
             Forgot your password?
           </Link>
         </div>
-        <Button className="w-full">Sign in</Button>
+        <Button type="submit" className="w-full">
+          Sign in
+        </Button>
       </form>
       <p className="text-sm text-center mt-6">
         Does&apos;nt have an account?{" "}

@@ -5,11 +5,11 @@ import { ICryptoService } from "../infra/services/crypto/crypto.service.definiti
 
 export interface DI_RETURN_TYPES {
   // Repositories
-  UserRepository: IUsersRepository;
+  UserRepository(drive?: "knex" | "drizzle"): IUsersRepository;
 
   // Use-cases
-  SignInUseCase: SignInUseCase;
-  SignUpUseCase: SignUpUseCase;
+  SignInUseCase(drive?: "knex" | "drizzle"): SignInUseCase;
+  SignUpUseCase(drive?: "knex" | "drizzle"): SignUpUseCase;
 
   // Services
   CryptoService: ICryptoService;

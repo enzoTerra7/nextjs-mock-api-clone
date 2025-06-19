@@ -29,8 +29,7 @@ export default function SignUp() {
             username: form.get("username") as string,
           });
         }}
-        className="space-y-4"
-      >
+        className="space-y-4">
         <Input type="email" name="email" placeholder="Email" required />
         <Input
           type="password"

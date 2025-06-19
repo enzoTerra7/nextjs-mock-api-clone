@@ -6,8 +6,7 @@ export function Logo({ className }: { className?: string }) {
       className={cn(
         "text-2xl font-medium lg:text-4xl text-secondary-foreground",
         className
-      )}
-    >
+      )}>
       Mock
       <strong className="text-primary font-bold tracking-tight">Clone</strong>
     </h2>
