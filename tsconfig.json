@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,20 +18,22 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "@application/*": ["./src/application/*"],
       "@domain/*": ["./src/domain/*"],
       "@infra/*": ["./src/infra/*"],
       "@ui/*": ["./app/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/auth/signup/signup.action.tsx"
+    "knexfile.ts"
   ],
   "exclude": ["node_modules"]
 }

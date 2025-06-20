@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { TestingDiContainer } from "@/__tests__/utils/mock_container";
 import { BadRequestError } from "@/src/domain/entities/errors/payload";
-import { expect, it } from "vitest";
 
 const signUpUseCase = TestingDiContainer.get("SignUpUseCase");
 
@@ -11,7 +10,7 @@ it("Register user successfully", async () => {
     password: faker.internet.password(),
     username: faker.internet.username(),
   };
-  const { user } = await signUpUseCase.execute({
+  const { user } = await signUpUseCase().execute({
     email,
     password,
     username,
@@ -26,7 +25,7 @@ it("Register user successfully", async () => {
 it("throws for invalid input", () => {
   expect(
     async () =>
-      await signUpUseCase.execute({
+      await signUpUseCase().execute({
         email: "user+1@user.com",
         password: "doesntmatter",
         username: "idontcare",

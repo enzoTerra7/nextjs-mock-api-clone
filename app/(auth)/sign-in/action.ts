@@ -12,7 +12,7 @@ const signInSchema = z.object({
 export const signInAction = createServerAction()
   .input(signInSchema)
   .handler(async ({ input }) => {
-    const signInUseCase = DiContainer.get("SignInUseCase");
+    const signInUseCase = DiContainer.get("SignInUseCase")("knex");
 
     const { user } = await signInUseCase.execute({
       ...input,
