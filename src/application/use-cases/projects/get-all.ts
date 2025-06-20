@@ -9,6 +9,11 @@ export class GetAllProjectsUseCase {
       input.user_id
     );
 
-    return projects;
+    return projects.map(({ id, name, routes, user_id }) => ({
+      id,
+      user_id,
+      routes,
+      name,
+    }));
   }
 }

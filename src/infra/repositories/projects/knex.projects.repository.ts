@@ -1,9 +1,9 @@
 import "server-only";
 import { db } from "../../database/knex/knex";
-import { ProjectsSchema } from "../../database/schemas";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
 import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
 import { Project } from "@/src/domain/entities/models/project.entities";
+import { generateKSUID } from "@/shared/generate_id";
 
 export class KnexProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -13,9 +13,9 @@ export class KnexProjectsRepository implements IProjectsRepository {
       .insert({
         name: input.name,
         user_id: input.user_id,
+        id: generateKSUID(),
       })
-      .returning("*")
-      .first<ProjectsSchema>();
+      .returning("*");
 
     const projectDto = Project.create({
       id: project.id,

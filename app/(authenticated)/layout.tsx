@@ -7,9 +7,9 @@ export default function AuthenticatedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <Header />
-      <main className="pt-28 h-full">
+      <main className="pt-28">
         <ContentWrapper className="space-y-4">{children}</ContentWrapper>
       </main>
     </div>

@@ -7,13 +7,20 @@ export class CreateProjectsUseCase {
 
   async execute(input: CreateProjectInput): CreateProjectOutput {
     try {
-      const project = await this.projectsRepository.createProject({
-        name: input.name,
-        user_id: input.user_id,
-      });
+      const { id, name, user_id, routes } =
+        await this.projectsRepository.createProject({
+          name: input.name,
+          user_id: input.user_id,
+        });
 
-      return project;
-    } catch {
+      return {
+        id,
+        name,
+        routes,
+        user_id,
+      };
+    } catch (e) {
+      console.error("Something went wrong:", e);
       throw new BadRequestError("Invalid user_id");
     }
   }

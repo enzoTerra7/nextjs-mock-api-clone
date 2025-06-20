@@ -29,10 +29,10 @@ export function generateKSUID(): string {
     .substring(0, 27);
 }
 
-function generateIds() {
-  for (let i = 1; i <= 10; i++) {
-    console.log(generateKSUID());
-  }
-}
+// function generateIds() {
+//   for (let i = 1; i <= 10; i++) {
+//     console.log(generateKSUID());
+//   }
+// }
 
-generateIds();
+// generateIds();

@@ -4,6 +4,7 @@ import { User } from "@domain/entities/models/user.entities";
 import { db } from "../../database/knex/knex";
 import { IUserInputCreate } from "@application/validators/user/user.input.create";
 import { UsersSchema } from "../../database/schemas";
+import { generateKSUID } from "@/shared/generate_id";
 
 export class KnexUsersRepository implements IUsersRepository {
   constructor() {}
@@ -69,9 +70,9 @@ export class KnexUsersRepository implements IUsersRepository {
         username: input.username,
         email: input.email,
         password: input.password,
+        id: generateKSUID(),
       })
-      .returning("*")
-      .first<UsersSchema>();
+      .returning("*");
 
     const {
       id,
