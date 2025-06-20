@@ -5,7 +5,7 @@ const signInUseCase = TestingDiContainer.get("SignInUseCase");
 
 it("returns user with email, username and id", async () => {
   console.log("executing test");
-  const { user } = await signInUseCase().execute({
+  const { user } = await signInUseCase.execute({
     email: `user+1@user.com`,
     password: "Test@2025",
   });
@@ -18,7 +18,7 @@ it("returns user with email, username and id", async () => {
 it("throws for invalid input", () => {
   expect(
     async () =>
-      await signInUseCase().execute({
+      await signInUseCase.execute({
         email: "non-existing@email.com",
         password: "doesntmatter",
       })

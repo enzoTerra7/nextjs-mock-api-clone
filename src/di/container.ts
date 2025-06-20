@@ -3,6 +3,9 @@ import { createUserRepositoryFactory } from "./factories/repositories/user.repos
 import { CryptoService } from "../infra/services/crypto/crypto.service";
 import { createSignInUseCaseFactory } from "./factories/use-cases/auth/sign-in.use-case.factory";
 import { createSignUpUseCaseFactory } from "./factories/use-cases/auth/sign-up.use-case.factory";
+import { createProjectRepositoryFactory } from "./factories/repositories/project.repository.factory";
+import { getAllProjectsUseCaseFactory } from "./factories/use-cases/projects/get-all.use-case.factory";
+import { createProjectsUseCaseFactory } from "./factories/use-cases/projects/create.use-case.factory";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -11,22 +14,21 @@ const resolver: {
   CryptoService: new CryptoService(),
 
   // repositories
-  UserRepository(drive: "knex" | "drizzle") {
-    return createUserRepositoryFactory(drive);
-  },
+  UserRepository: createUserRepositoryFactory(),
+  ProjectRepository: createProjectRepositoryFactory(),
 
   // use cases
-  SignInUseCase(drive: "knex" | "drizzle") {
-    return createSignInUseCaseFactory(
-      resolver.UserRepository(drive),
-      resolver.CryptoService
-    );
+  get SignInUseCase() {
+    return createSignInUseCaseFactory(this.UserRepository, this.CryptoService);
   },
-  SignUpUseCase(drive: "knex" | "drizzle") {
-    return createSignUpUseCaseFactory(
-      resolver.UserRepository(drive),
-      resolver.CryptoService
-    );
+  get SignUpUseCase() {
+    return createSignUpUseCaseFactory(this.UserRepository, this.CryptoService);
+  },
+  get GetAllProjectsUseCase() {
+    return getAllProjectsUseCaseFactory(this.ProjectRepository);
+  },
+  get CreateProjectsUseCase() {
+    return createProjectsUseCaseFactory(this.ProjectRepository);
   },
 };
 
