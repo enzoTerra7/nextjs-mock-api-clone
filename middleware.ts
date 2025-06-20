@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./app/_lib/auth/session";
 
-const publicPages = ["/sign-in", "sign-up"];
+const publicPages = ["/sign-in", "/sign-up"];
 
 export default async function Middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -22,3 +22,7 @@ export default async function Middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

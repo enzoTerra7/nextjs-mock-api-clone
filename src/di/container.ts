@@ -11,16 +11,22 @@ const resolver: {
   CryptoService: new CryptoService(),
 
   // repositories
-  get UserRepository() {
-    return createUserRepositoryFactory();
+  UserRepository(drive: "knex" | "drizzle") {
+    return createUserRepositoryFactory(drive);
   },
 
   // use cases
-  get SignInUseCase() {
-    return createSignInUseCaseFactory(this.UserRepository, this.CryptoService);
+  SignInUseCase(drive: "knex" | "drizzle") {
+    return createSignInUseCaseFactory(
+      resolver.UserRepository(drive),
+      resolver.CryptoService
+    );
   },
-  get SignUpUseCase() {
-    return createSignUpUseCaseFactory(this.UserRepository, this.CryptoService);
+  SignUpUseCase(drive: "knex" | "drizzle") {
+    return createSignUpUseCaseFactory(
+      resolver.UserRepository(drive),
+      resolver.CryptoService
+    );
   },
 };
 

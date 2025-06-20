@@ -57,7 +57,7 @@ export async function FakerDataBuilderTableSeed() {
   console.log("Start to map all faker workable modules");
   await mapAllDesiredFakerModules();
   console.log("All modules generated");
-  console.log(dataBuilder)
+  console.log(dataBuilder);
   console.log("Start to up modules to db");
   await db.insert(dataBuildersTable).values(dataBuilder);
   console.log("✅ FakerDataBuilderTableSeed seeder executed!");

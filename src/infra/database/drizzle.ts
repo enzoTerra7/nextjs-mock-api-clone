@@ -5,7 +5,7 @@ import "dotenv/config";
  * It is used to connect to the database and execute queries.
  * It is a singleton and is used in the entire application.
  */
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/node-postgres";
 import * as dbSchema from "./schemas";
 /**
  * @description
