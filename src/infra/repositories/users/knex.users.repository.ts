@@ -66,7 +66,6 @@ export class KnexUsersRepository implements IUsersRepository {
   async createUser(input: IUserInputCreate): Promise<User> {
     const user = await db("users")
       .insert({
-        id: db.raw("gen_random_uuid()"),
         username: input.username,
         email: input.email,
         password: input.password,

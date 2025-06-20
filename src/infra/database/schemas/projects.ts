@@ -10,7 +10,7 @@ export const projectsTable = pgTable("projects", {
 
   name: text("name").notNull(),
 
-  userId: text("user_id")
+  user_id: text("user_id")
     .notNull()
     .references(() => usersTable.id, {
       onDelete: "cascade",

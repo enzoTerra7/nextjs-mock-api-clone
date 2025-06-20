@@ -20,7 +20,7 @@ export const routesTable = pgTable("routes", {
     .notNull()
     .$defaultFn(() => generateKSUID()),
 
-  routeType: text("route_type")
+  route_type: text("route_type")
     .notNull()
     .references(() => routesTypesTable.name, {
       onDelete: "restrict",
@@ -28,13 +28,13 @@ export const routesTable = pgTable("routes", {
 
   schema: jsonb("schema").notNull(),
 
-  projectId: text("project_id")
+  project_id: text("project_id")
     .notNull()
     .references(() => projectsTable.id, {
       onDelete: "cascade",
     }),
 
-  dataBuilderId: text("data_builder_id")
+  data_builder_id: text("data_builder_id")
     .notNull()
     .references(() => projectsTable.id, {
       onDelete: "cascade",

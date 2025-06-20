@@ -1,6 +1,6 @@
 import type { Knex } from "knex";
 
-const config = {
+export const knex_config = {
   client: "pg",
   connection: {
     connectionString: process.env.DATABASE_URL!,
@@ -12,5 +12,3 @@ const config = {
   acquireConnectionTimeout: 60000,
 } satisfies Knex.Config;
 
-export default config;
-export { config };

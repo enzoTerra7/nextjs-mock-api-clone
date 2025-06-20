@@ -23,7 +23,7 @@ export const dataBuildersTable = pgTable("data_builders", {
 
   name: text("name").notNull(),
 
-  dataBuilderTypeId: text("data_builder_type_id")
+  data_builder_type_id: text("data_builder_type_id")
     .notNull()
     .references(() => dataBuilderTypesTable.name, {
       onDelete: "restrict",
