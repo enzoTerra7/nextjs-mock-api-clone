@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Lora, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "./_components/ui/sonner";
 
 const InterSans = Inter({
   variable: "--font-inter-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${InterSans.variable} ${LoraSerif.variable} ${GeistMono.variable} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

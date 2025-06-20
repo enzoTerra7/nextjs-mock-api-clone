@@ -4,16 +4,17 @@ import { Input } from "@/app/_components/ui/input";
 import Link from "next/link";
 import { useServerAction } from "zsa-react";
 import { signInAction } from "./action";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function SignIn() {
-  const { execute } = useServerAction(signInAction, {
-    onSuccess(data) {
-      alert("success");
-      console.log("user", data);
+  const { execute, isPending } = useServerAction(signInAction, {
+    onSuccess() {
+      toast.success("Sign in successfully!");
+      redirect("/projects");
     },
     onError(error) {
-      alert("error");
-      console.log(error);
+      toast.error(error.err.message);
     },
   });
   return (
@@ -26,17 +27,31 @@ export default function SignIn() {
             password: form.get("password") as string,
           });
         }}
-        className="space-y-4">
-        <Input type="email" name="email" placeholder="E-mail" required />
-        <Input type="password" name="password" placeholder="Senha" required />
+        className="space-y-4"
+      >
+        <Input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          required
+          disabled={isPending}
+        />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Senha"
+          required
+          disabled={isPending}
+        />
         <div className="flex justify-between text-sm">
           <Link
             href="/forgot-password"
-            className="text-primary hover:underline">
+            className="text-primary hover:underline"
+          >
             Forgot your password?
           </Link>
         </div>
-        <Button type="submit" className="w-full">
+        <Button isLoading={isPending} type="submit" className="w-full">
           Sign in
         </Button>
       </form>
