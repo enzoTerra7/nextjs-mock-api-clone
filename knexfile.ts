@@ -10,5 +10,7 @@ export const knex_config = {
     max: 10,
   },
   acquireConnectionTimeout: 60000,
+  migrations: {
+    directory: "./migrations/knex_migrations",
+  },
 } satisfies Knex.Config;
-
