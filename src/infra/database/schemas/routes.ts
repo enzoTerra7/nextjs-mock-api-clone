@@ -1,4 +1,4 @@
-import { pgTable, text, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { projectsTable } from "./projects";
 import { generateKSUID } from "@/shared/generate_id";
 
@@ -8,6 +8,7 @@ export interface RoutesSchema {
   schema: Record<string, string>;
   project_id: string;
   data_builder_id: string;
+  created_at: Date;
 }
 
 export interface RoutesTypeSchema {
@@ -39,6 +40,11 @@ export const routesTable = pgTable("routes", {
     .references(() => projectsTable.id, {
       onDelete: "cascade",
     }),
+
+  
+    created_at: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 export const routesTypesTable = pgTable("routes_types", {
