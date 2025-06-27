@@ -1,9 +1,13 @@
 import "server-only";
 import { db } from "../../database/knex/knex";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
-import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
+import {
+  IProjectDelete,
+  IProjectInputCreate,
+} from "@/src/application/validators/project/project.input.create";
 import { Project } from "@/src/domain/entities/models/project.entities";
 import { generateKSUID } from "@/shared/generate_id";
+import { ProjectsSchema } from "../../database/schemas";
 
 export class KnexProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -15,7 +19,8 @@ export class KnexProjectsRepository implements IProjectsRepository {
         user_id: input.user_id,
         id: generateKSUID(),
       })
-      .returning("*");
+      .returning("*")
+      .first<ProjectsSchema>();
 
     const projectDto = Project.create({
       id: project.id,
@@ -27,7 +32,10 @@ export class KnexProjectsRepository implements IProjectsRepository {
   }
 
   async getAllProjects(user_id: string): Promise<Project[]> {
-    const projects = await db("projects").select("*").where("user_id", user_id);
+    const projects = await db("projects")
+      .select("*")
+      .where("user_id", user_id)
+      .orderBy("created_at", "desc");
 
     const projectsDto = projects.map((project) =>
       Project.create({
@@ -38,5 +46,13 @@ export class KnexProjectsRepository implements IProjectsRepository {
     );
 
     return projectsDto;
+  }
+
+  async deleteProject(input: IProjectDelete): Promise<void> {
+    await db("projects")
+      .delete()
+      .where("id", input.project_id)
+      .andWhere("user_id", input.user_id);
+    return;
   }
 }

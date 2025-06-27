@@ -3,7 +3,11 @@ import { db } from "../../database/drizzle";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
 import { Project } from "@/src/domain/entities/models/project.entities";
 import { projectsTable } from "../../database/schemas";
-import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
+import {
+  IProjectDelete,
+  IProjectInputCreate,
+} from "@/src/application/validators/project/project.input.create";
+import { eq } from "drizzle-orm";
 
 export class DrizzleProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -11,6 +15,9 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
   async getAllProjects(user_id: string): Promise<Project[]> {
     const projects = await db.query.projectsTable.findMany({
       where: (project, { eq }) => eq(project.user_id, user_id),
+      orderBy(fields, operators) {
+        return [operators.desc(fields.created_at)];
+      },
     });
 
     const projectsDto = projects.map((project) =>
@@ -40,5 +47,13 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
     });
 
     return projectDto;
+  }
+
+  async deleteProject(input: IProjectDelete): Promise<void> {
+    await db
+      .delete(projectsTable)
+      .where(eq(projectsTable.id, input.project_id));
+
+    return;
   }
 }

@@ -17,3 +17,8 @@ export type CreateProjectInput = {
 };
 
 export type CreateProjectOutput = Promise<Project>;
+
+export type DeleteProjectInput = {
+  project_id: string;
+  user_id: string;
+};

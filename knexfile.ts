@@ -11,4 +11,3 @@ export const knex_config = {
   },
   acquireConnectionTimeout: 60000,
 } satisfies Knex.Config;
-

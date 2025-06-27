@@ -38,3 +38,23 @@ export const createProjectAction = createServerAction()
 
     return;
   });
+
+const deleteProjectSchema = z.object({
+  project_id: z.string(),
+});
+
+export const deleteProjectAction = createServerAction()
+  .input(deleteProjectSchema)
+  .handler(async ({ input }) => {
+    const session = await verifySession();
+    const createProjectsUseCase = DiContainer.get("DeleteProjectsUseCase");
+
+    await createProjectsUseCase.execute({
+      project_id: input.project_id,
+      user_id: session.userId,
+    });
+
+    revalidatePath("/projects");
+
+    return;
+  });

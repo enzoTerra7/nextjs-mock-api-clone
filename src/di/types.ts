@@ -5,6 +5,7 @@ import { ICryptoService } from "../infra/services/crypto/crypto.service.definiti
 import { IProjectsRepository } from "../application/repositories/projects.repository.interface";
 import { GetAllProjectsUseCase } from "../application/use-cases/projects/get-all";
 import { CreateProjectsUseCase } from "../application/use-cases/projects/create";
+import { DeleteProjectsUseCase } from "../application/use-cases/projects/delete";
 
 export interface DI_RETURN_TYPES {
   // Repositories
@@ -16,6 +17,7 @@ export interface DI_RETURN_TYPES {
   SignUpUseCase: SignUpUseCase;
   GetAllProjectsUseCase: GetAllProjectsUseCase;
   CreateProjectsUseCase: CreateProjectsUseCase;
+  DeleteProjectsUseCase: DeleteProjectsUseCase;
 
   // Services
   CryptoService: ICryptoService;
