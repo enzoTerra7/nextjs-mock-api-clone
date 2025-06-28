@@ -9,6 +9,7 @@ export interface RoutesSchema {
   project_id: string;
   data_builder_id: string;
   created_at: Date;
+  route_path: string;
 }
 
 export interface RoutesTypeSchema {
@@ -27,6 +28,8 @@ export const routesTable = pgTable("routes", {
       onDelete: "restrict",
     }),
 
+  route_path: text("route_name").notNull(),
+
   schema: jsonb("schema").notNull(),
 
   project_id: text("project_id")
@@ -41,8 +44,7 @@ export const routesTable = pgTable("routes", {
       onDelete: "cascade",
     }),
 
-  
-    created_at: timestamp("created_at", { withTimezone: true })
+  created_at: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
 });

@@ -1,12 +1,10 @@
 import { generateKSUID } from "@/shared/generate_id";
 import { ProjectsSchema } from "../../database/schemas";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
-import {
-  IProjectDelete,
-  IProjectInputCreate,
-} from "@/src/application/validators/project/project.input.create";
+import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
 import { Project } from "@/src/domain/entities/models/project.entities";
 import { BadRequestError } from "@/src/domain/entities/errors/payload";
+import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
 
 export class MockProjectsRepository implements IProjectsRepository {
   private _projects: ProjectsSchema[];
@@ -77,7 +75,7 @@ export class MockProjectsRepository implements IProjectsRepository {
     return projectDto;
   }
 
-  async deleteProject(input: IProjectDelete): Promise<void> {
+  async deleteProject(input: IProjectInputDelete): Promise<void> {
     const index = this._projects.findIndex(
       (project) =>
         project.user_id === input.user_id && project.id === input.project_id

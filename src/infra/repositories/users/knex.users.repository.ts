@@ -1,7 +1,7 @@
 import "server-only";
 import { IUsersRepository } from "@application/repositories/users.repository.interface";
 import { User } from "@domain/entities/models/user.entities";
-import { db } from "../../database/knex/knex";
+import { knexDb } from "../../database/knex/knex";
 import { IUserInputCreate } from "@application/validators/user/user.input.create";
 import { UsersSchema } from "../../database/schemas";
 import { generateKSUID } from "@/shared/generate_id";
@@ -9,7 +9,7 @@ import { generateKSUID } from "@/shared/generate_id";
 export class KnexUsersRepository implements IUsersRepository {
   constructor() {}
   async getUserById(id: string): Promise<User | undefined> {
-    const user = await db("users")
+    const user = await knexDb("users")
       .select("*")
       .where({ id })
       .first<UsersSchema>();
@@ -32,7 +32,7 @@ export class KnexUsersRepository implements IUsersRepository {
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const user = await db("users")
+    const user = await knexDb("users")
       .select("*")
       .where({ email })
       .first<UsersSchema>();
@@ -65,7 +65,7 @@ export class KnexUsersRepository implements IUsersRepository {
   }
 
   async createUser(input: IUserInputCreate): Promise<User> {
-    const user = await db("users")
+    const user = await knexDb("users")
       .insert({
         username: input.username,
         email: input.email,
