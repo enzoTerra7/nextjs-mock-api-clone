@@ -88,5 +88,7 @@ export class MockProjectsRepository implements IProjectsRepository {
     }
 
     this._projects.slice(index, 1);
+
+    return;
   }
 }

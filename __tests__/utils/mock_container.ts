@@ -7,6 +7,7 @@ import { CryptoService } from "@/src/infra/services/crypto/crypto.service";
 import { signInUserInfo } from "./sign-in";
 import { GetAllProjectsUseCase } from "@/src/application/use-cases/projects/get-all";
 import { CreateProjectsUseCase } from "@/src/application/use-cases/projects/create";
+import { DeleteProjectsUseCase } from "@/src/application/use-cases/projects/delete";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -30,6 +31,9 @@ const resolver: {
   },
   get CreateProjectsUseCase() {
     return new CreateProjectsUseCase(this.ProjectRepository);
+  },
+  get DeleteProjectsUseCase() {
+    return new DeleteProjectsUseCase(this.ProjectRepository);
   },
 };
 
