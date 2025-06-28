@@ -1,3 +1,4 @@
+import "server-only";
 import { IRoutesRepository } from "@/src/application/repositories/routes.repositories.interface";
 import { RoutesType } from "@/src/domain/entities/models/routes-type.entities";
 import { knexDb } from "../../database/knex/knex";

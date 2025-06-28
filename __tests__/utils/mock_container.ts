@@ -9,6 +9,12 @@ import { GetAllProjectsUseCase } from "@/src/application/use-cases/projects/get-
 import { CreateProjectsUseCase } from "@/src/application/use-cases/projects/create";
 import { DeleteProjectsUseCase } from "@/src/application/use-cases/projects/delete";
 import { MockRoutesRepository } from "@/src/infra/repositories/routes/mock.routes.repository";
+import { CreateRouteUseCase } from "@/src/application/use-cases/routes/create";
+import { DeleteRouteUseCase } from "@/src/application/use-cases/routes/delete";
+import { GetAllRoutesTypesUseCase } from "@/src/application/use-cases/routes/get-all-routes-types";
+import { GetAllRoutesUseCase } from "@/src/application/use-cases/routes/get-all-routes";
+import { GetRoutesTypesUseCase } from "@/src/application/use-cases/routes/get-routes-types";
+import { GetRouteUseCase } from "@/src/application/use-cases/routes/get-routes";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -36,6 +42,24 @@ const resolver: {
   },
   get DeleteProjectsUseCase() {
     return new DeleteProjectsUseCase(this.ProjectRepository);
+  },
+  get CreateRouteUseCase() {
+    return new CreateRouteUseCase(this.RoutesRepository);
+  },
+  get DeleteRouteUseCase() {
+    return new DeleteRouteUseCase(this.RoutesRepository);
+  },
+  get GetAllRoutesTypesUseCase() {
+    return new GetAllRoutesTypesUseCase(this.RoutesRepository);
+  },
+  get GetAllRoutesUseCase() {
+    return new GetAllRoutesUseCase(this.RoutesRepository);
+  },
+  get GetRoutesTypesUseCase() {
+    return new GetRoutesTypesUseCase(this.RoutesRepository);
+  },
+  get GetRouteUseCase() {
+    return new GetRouteUseCase(this.RoutesRepository);
   },
 };
 

@@ -8,6 +8,12 @@ import { getAllProjectsUseCaseFactory } from "./factories/use-cases/projects/get
 import { createProjectsUseCaseFactory } from "./factories/use-cases/projects/create.use-case.factory";
 import { deleteProjectsUseCaseFactory } from "./factories/use-cases/projects/delete.use-case.factory";
 import { createRoutesRepositoryFactory } from "./factories/repositories/routes.repository.factory";
+import { createRouteUseCaseFactory } from "./factories/use-cases/routes/create.use-case.factory";
+import { deleteRouteUseCaseFactory } from "./factories/use-cases/routes/delete.use-case.factory";
+import { getAllRoutesTypeUseCaseFactory } from "./factories/use-cases/routes/get-all-routes-type.use-case.factory";
+import { getAllRoutesUseCaseFactory } from "./factories/use-cases/routes/get-all-routes.use-case.factory";
+import { getRouteTypeUseCaseFactory } from "./factories/use-cases/routes/get-route-type.use-case.factory";
+import { getRouteUseCaseFactory } from "./factories/use-cases/routes/get-route.use-case.factory";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -35,6 +41,24 @@ const resolver: {
   },
   get DeleteProjectsUseCase() {
     return deleteProjectsUseCaseFactory(this.ProjectRepository);
+  },
+  get CreateRouteUseCase() {
+    return createRouteUseCaseFactory(this.RoutesRepository);
+  },
+  get DeleteRouteUseCase() {
+    return deleteRouteUseCaseFactory(this.RoutesRepository);
+  },
+  get GetAllRoutesTypesUseCase() {
+    return getAllRoutesTypeUseCaseFactory(this.RoutesRepository);
+  },
+  get GetAllRoutesUseCase() {
+    return getAllRoutesUseCaseFactory(this.RoutesRepository);
+  },
+  get GetRoutesTypesUseCase() {
+    return getRouteTypeUseCaseFactory(this.RoutesRepository);
+  },
+  get GetRouteUseCase() {
+    return getRouteUseCaseFactory(this.RoutesRepository);
   },
 };
 
