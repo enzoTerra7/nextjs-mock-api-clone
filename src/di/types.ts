@@ -6,11 +6,13 @@ import { IProjectsRepository } from "../application/repositories/projects.reposi
 import { GetAllProjectsUseCase } from "../application/use-cases/projects/get-all";
 import { CreateProjectsUseCase } from "../application/use-cases/projects/create";
 import { DeleteProjectsUseCase } from "../application/use-cases/projects/delete";
+import { IRoutesRepository } from "../application/repositories/routes.repositories.interface";
 
 export interface DI_RETURN_TYPES {
   // Repositories
   UserRepository: IUsersRepository;
   ProjectRepository: IProjectsRepository;
+  RoutesRepository: IRoutesRepository;
 
   // Use-cases
   SignInUseCase: SignInUseCase;

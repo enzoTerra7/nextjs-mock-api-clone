@@ -7,6 +7,7 @@ import { createProjectRepositoryFactory } from "./factories/repositories/project
 import { getAllProjectsUseCaseFactory } from "./factories/use-cases/projects/get-all.use-case.factory";
 import { createProjectsUseCaseFactory } from "./factories/use-cases/projects/create.use-case.factory";
 import { deleteProjectsUseCaseFactory } from "./factories/use-cases/projects/delete.use-case.factory";
+import { createRoutesRepositoryFactory } from "./factories/repositories/routes.repository.factory";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -17,6 +18,7 @@ const resolver: {
   // repositories
   UserRepository: createUserRepositoryFactory(),
   ProjectRepository: createProjectRepositoryFactory(),
+  RoutesRepository: createRoutesRepositoryFactory(),
 
   // use cases
   get SignInUseCase() {

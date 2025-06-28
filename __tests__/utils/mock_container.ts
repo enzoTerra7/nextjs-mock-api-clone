@@ -8,6 +8,7 @@ import { signInUserInfo } from "./sign-in";
 import { GetAllProjectsUseCase } from "@/src/application/use-cases/projects/get-all";
 import { CreateProjectsUseCase } from "@/src/application/use-cases/projects/create";
 import { DeleteProjectsUseCase } from "@/src/application/use-cases/projects/delete";
+import { MockRoutesRepository } from "@/src/infra/repositories/routes/mock.routes.repository";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -18,6 +19,7 @@ const resolver: {
   // repositories
   UserRepository: new MockUsersRepository(),
   ProjectRepository: new MockProjectsRepository(signInUserInfo.id),
+  RoutesRepository: new MockRoutesRepository(signInUserInfo.id),
 
   // use cases
   get SignInUseCase() {

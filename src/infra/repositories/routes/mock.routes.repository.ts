@@ -15,7 +15,7 @@ import { Routes } from "@/src/domain/entities/models/routes.entities";
 import { IRoutesInputCreate } from "@/src/application/validators/routes/route.input.create";
 import { IRoutesInputDelete } from "@/src/application/validators/routes/route.input.delete";
 
-export class MockProjectsRepository implements IRoutesRepository {
+export class MockRoutesRepository implements IRoutesRepository {
   private _projects: ProjectsSchema[];
   private _routes: RoutesSchema[];
   private _routes_types: RoutesTypeSchema[];
