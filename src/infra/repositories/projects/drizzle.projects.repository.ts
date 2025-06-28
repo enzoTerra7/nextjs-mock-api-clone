@@ -1,5 +1,5 @@
 import "server-only";
-import { db } from "../../database/drizzle";
+import { DrizzleDb } from "../../database/drizzle";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
 import { Project } from "@/src/domain/entities/models/project.entities";
 import { projectsTable } from "../../database/schemas";
@@ -11,7 +11,7 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
   constructor() {}
 
   async getAllProjects(user_id: string): Promise<Project[]> {
-    const projects = await db.query.projectsTable.findMany({
+    const projects = await DrizzleDb.query.projectsTable.findMany({
       where: (project, { eq }) => eq(project.user_id, user_id),
       orderBy(fields, operators) {
         return [operators.desc(fields.created_at)];
@@ -30,8 +30,7 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
   }
 
   async createProject(input: IProjectInputCreate): Promise<Project> {
-    const [project] = await db
-      .insert(projectsTable)
+    const [project] = await DrizzleDb.insert(projectsTable)
       .values({
         name: input.name,
         user_id: input.user_id,
@@ -48,9 +47,9 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
   }
 
   async deleteProject(input: IProjectInputDelete): Promise<void> {
-    await db
-      .delete(projectsTable)
-      .where(eq(projectsTable.id, input.project_id));
+    await DrizzleDb.delete(projectsTable).where(
+      eq(projectsTable.id, input.project_id)
+    );
 
     return;
   }

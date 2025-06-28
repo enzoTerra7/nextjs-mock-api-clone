@@ -1,14 +1,14 @@
 import "server-only";
 import { IUsersRepository } from "@application/repositories/users.repository.interface";
 import { User } from "@domain/entities/models/user.entities";
-import { db } from "../../database/drizzle";
+import { DrizzleDb } from "../../database/drizzle";
 import { usersTable } from "../../database/schemas";
 import { IUserInputCreate } from "@application/validators/user/user.input.create";
 
 export class DrizzleUsersRepository implements IUsersRepository {
   constructor() {}
   async getUserById(id: string): Promise<User | undefined> {
-    const user = await db.query.usersTable.findFirst({
+    const user = await DrizzleDb.query.usersTable.findFirst({
       where: (user, { eq }) => eq(user.id, id),
     });
 
@@ -30,7 +30,7 @@ export class DrizzleUsersRepository implements IUsersRepository {
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const user = await db.query.usersTable.findFirst({
+    const user = await DrizzleDb.query.usersTable.findFirst({
       where: (user, { eq }) => eq(user.email, email),
     });
 
@@ -62,8 +62,7 @@ export class DrizzleUsersRepository implements IUsersRepository {
   }
 
   async createUser(input: IUserInputCreate): Promise<User> {
-    const [user] = await db
-      .insert(usersTable)
+    const [user] = await DrizzleDb.insert(usersTable)
       .values({
         email: input.email,
         password: input.password,

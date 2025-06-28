@@ -16,11 +16,11 @@ import * as dbSchema from "./schemas";
  * @see https://drizzle.dev/docs/overview
  */
 
-const db = drizzle({
+const DrizzleDb = drizzle({
   connection: process.env.DATABASE_URL as string,
   schema: dbSchema,
 });
 
-export { db };
+export { DrizzleDb };
 
-export type DrizzleDatabase = typeof db;
+export type DrizzleDatabase = typeof DrizzleDb;
