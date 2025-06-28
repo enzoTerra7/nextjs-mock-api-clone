@@ -4,6 +4,6 @@ export type Routes = {
   schema: Record<string, string>;
   project_id: string;
   data_builder_id: string;
-  created_at: Date;
+  created_at: string;
   route_path: string;
 };
