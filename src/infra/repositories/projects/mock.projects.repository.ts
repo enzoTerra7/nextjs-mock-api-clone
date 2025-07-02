@@ -8,6 +8,7 @@ import {
   NotFoundError,
 } from "@/src/domain/entities/errors/payload";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
+import { Routes } from "@/src/domain/entities/models/routes.entities";
 
 export class MockProjectsRepository implements IProjectsRepository {
   private _projects: ProjectsSchema[];
@@ -93,16 +94,25 @@ export class MockProjectsRepository implements IProjectsRepository {
     return;
   }
 
-  async getProjectById(id: string): Promise<Project> {
+  async getProjectById(id: string): Promise<Omit<Project, "routes">> {
     const project = this._projects.find((project) => project.id === id);
 
     if (!project) {
       throw new NotFoundError("Project not exist");
     }
 
-    return {
-      ...project,
-      routes: [],
-    };
+    return project;
+  }
+
+  async getProjectRoutes(id: string): Promise<Routes[]> {
+    const project = this._projects.find((project) => project.id === id);
+
+    if (!project) {
+      return [];
+    }
+
+    const routes: Routes[] = [];
+
+    return routes;
   }
 }

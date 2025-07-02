@@ -10,3 +10,9 @@ export const routesInfo = {
   user_id: "aE8aMAE3fCGzvxeSOtaN5UMaPCo",
   route_path: "my-route/1",
 };
+
+export const projectInfo = {
+  id: "aFWlYv0hs7Y9sAXvu8WydPrHftM",
+  user_id: "aE8aMAE3fCGzvxeSOtaN5UMaPCo",
+  routes: [],
+};

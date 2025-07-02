@@ -1,3 +1,5 @@
+import { Routes } from "@/src/domain/entities/models/routes.entities";
+
 type Project = {
   id: string;
   name: string;
@@ -15,7 +17,7 @@ export type GetProjectByIdInput = {
   project_id: string;
 };
 
-export type GetProjectByIdOutput = Promise<Project>;
+export type GetProjectByIdOutput = Promise<Omit<Project, "routes">>;
 
 export type CreateProjectInput = {
   name: string;
@@ -28,3 +30,11 @@ export type DeleteProjectInput = {
   project_id: string;
   user_id: string;
 };
+
+export type GetProjectRoutesInput = {
+  project_id: string;
+};
+
+export type GetProjectRoutesOutput = Promise<{
+  [x: string]: Routes[];
+}>;

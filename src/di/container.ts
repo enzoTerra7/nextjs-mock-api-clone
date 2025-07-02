@@ -15,6 +15,7 @@ import { getAllRoutesUseCaseFactory } from "./factories/use-cases/routes/get-all
 import { getRouteTypeUseCaseFactory } from "./factories/use-cases/routes/get-route-type.use-case.factory";
 import { getRouteUseCaseFactory } from "./factories/use-cases/routes/get-route.use-case.factory";
 import { getProjectByIdUseCaseFactory } from "./factories/use-cases/projects/get-by-id.use-case.factory";
+import { getProjectRoutesUseCaseFactory } from "./factories/use-cases/projects/get-project-routes";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -39,6 +40,9 @@ const resolver: {
   },
   get GetProjectByIdUseCase() {
     return getProjectByIdUseCaseFactory(this.ProjectRepository);
+  },
+  get GetProjectRoutesUseCase() {
+    return getProjectRoutesUseCaseFactory(this.ProjectRepository);
   },
   get CreateProjectsUseCase() {
     return createProjectsUseCaseFactory(this.ProjectRepository);

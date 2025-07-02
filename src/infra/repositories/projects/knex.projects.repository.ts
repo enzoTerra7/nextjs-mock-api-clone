@@ -7,6 +7,7 @@ import { generateKSUID } from "@/shared/generate_id";
 import { ProjectsSchema } from "../../database/schemas";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
 import { NotFoundError } from "@/src/domain/entities/errors/payload";
+import { Routes } from "@/src/domain/entities/models/routes.entities";
 
 export class KnexProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -55,7 +56,7 @@ export class KnexProjectsRepository implements IProjectsRepository {
     return;
   }
 
-  async getProjectById(id: string): Promise<Project> {
+  async getProjectById(id: string): Promise<Omit<Project, "routes">> {
     const project = await knexDb("projects")
       .select("*")
       .where("id", id)
@@ -65,15 +66,15 @@ export class KnexProjectsRepository implements IProjectsRepository {
       throw new NotFoundError("Project not exist");
     }
 
-    const project_routes = await knexDb("routes").select(
-      "route_path",
-      "id",
-      "route_type"
-    );
+    return project;
+  }
 
-    return {
-      ...project,
-      routes: project_routes,
-    };
+  async getProjectRoutes(id: string): Promise<Routes[]> {
+    const project_routes = await knexDb("routes")
+      .select("*")
+      .orderBy("route_path", "asc")
+      .where("project_id", id);
+
+    return project_routes;
   }
 }

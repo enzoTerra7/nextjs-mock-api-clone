@@ -14,6 +14,7 @@ import { GetAllRoutesTypesUseCase } from "../application/use-cases/routes/get-al
 import { GetAllRoutesUseCase } from "../application/use-cases/routes/get-all-routes";
 import { GetRoutesTypesUseCase } from "../application/use-cases/routes/get-routes-types";
 import { GetRouteUseCase } from "../application/use-cases/routes/get-routes";
+import { GetProjectRoutesUseCase } from "../application/use-cases/projects/get-project-routes";
 
 export interface DI_RETURN_TYPES {
   // Repositories
@@ -26,6 +27,7 @@ export interface DI_RETURN_TYPES {
   SignUpUseCase: SignUpUseCase;
   GetAllProjectsUseCase: GetAllProjectsUseCase;
   GetProjectByIdUseCase: GetProjectByIdUseCase;
+  GetProjectRoutesUseCase: GetProjectRoutesUseCase;
   CreateProjectsUseCase: CreateProjectsUseCase;
   DeleteProjectsUseCase: DeleteProjectsUseCase;
 

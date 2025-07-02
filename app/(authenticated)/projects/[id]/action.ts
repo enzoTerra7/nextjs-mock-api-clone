@@ -11,3 +11,13 @@ export const getProjectId = cache(async (id: string) => {
 
   return project;
 });
+
+export const getProjectRoutes = cache(async (id: string) => {
+  const getProjectRoutes = DiContainer.get("GetProjectRoutesUseCase");
+
+  const routes = await getProjectRoutes.execute({
+    project_id: id,
+  });
+
+  return routes;
+});

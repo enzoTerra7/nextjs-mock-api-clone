@@ -1,8 +1,10 @@
 import { PageProps } from "@/types";
-import { getProjectId } from "./action";
+import { getProjectId, getProjectRoutes } from "./action";
 import { PageTitle } from "@/app/_components/ui/page-title";
 import Link from "next/link";
 import { buttonVariants } from "@/app/_components/ui/button";
+import { Suspense } from "react";
+import { ProjectRoutesContainer } from "./_components/projectId.routes.container";
 
 export default async function ProjectIdPage({
   params,
@@ -11,6 +13,8 @@ export default async function ProjectIdPage({
 }>) {
   const { id } = await params;
   const project = await getProjectId(id);
+
+  const getRoutes = getProjectRoutes(id);
 
   return (
     <>
@@ -27,6 +31,9 @@ export default async function ProjectIdPage({
           Voltar
         </Link>
       </PageTitle>
+      <Suspense>
+        <ProjectRoutesContainer getRoutes={getRoutes} />
+      </Suspense>
     </>
   );
 }

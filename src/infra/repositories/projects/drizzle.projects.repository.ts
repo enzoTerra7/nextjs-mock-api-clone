@@ -7,6 +7,7 @@ import { IProjectInputCreate } from "@/src/application/validators/project/projec
 import { eq } from "drizzle-orm";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
 import { NotFoundError } from "@/src/domain/entities/errors/payload";
+import { Routes } from "@/src/domain/entities/models/routes.entities";
 
 export class DrizzleProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -55,7 +56,7 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
     return;
   }
 
-  async getProjectById(id: string): Promise<Project> {
+  async getProjectById(id: string): Promise<Omit<Project, "routes">> {
     const project = await DrizzleDb.query.projectsTable.findFirst({
       where: (project, { eq }) => eq(project.id, id),
     });
@@ -64,18 +65,18 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
       throw new NotFoundError("Project not exists");
     }
 
+    return project;
+  }
+
+  async getProjectRoutes(id: string): Promise<Routes[]> {
     const routes = await DrizzleDb.query.routesTable.findMany({
       where: (route, { eq }) => eq(route.project_id, id),
-      columns: {
-        route_path: true,
-        id: true,
-        route_type: true,
+      orderBy(route, { asc }) {
+        return asc(route.route_type);
       },
     });
 
-    return {
-      ...project,
-      routes,
-    };
+    // @ts-expect-error This actually return type Routes[]
+    return routes;
   }
 }
