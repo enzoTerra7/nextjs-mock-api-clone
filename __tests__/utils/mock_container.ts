@@ -4,7 +4,7 @@ import { DI_RETURN_TYPES } from "@/src/di/types";
 import { MockProjectsRepository } from "@/src/infra/repositories/projects/mock.projects.repository";
 import { MockUsersRepository } from "@/src/infra/repositories/users/mock.users.repository";
 import { CryptoService } from "@/src/infra/services/crypto/crypto.service";
-import { signInUserInfo } from "./sign-in";
+import { signInUserInfo } from "./helpers";
 import { GetAllProjectsUseCase } from "@/src/application/use-cases/projects/get-all";
 import { CreateProjectsUseCase } from "@/src/application/use-cases/projects/create";
 import { DeleteProjectsUseCase } from "@/src/application/use-cases/projects/delete";

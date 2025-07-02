@@ -1,6 +1,5 @@
-"use server";
+import { IRoutesRepository } from "@application/repositories/routes.repositories.interface";
 import { CreateRouteInput, CreateRouteOutput } from "./types";
-import { IRoutesRepository } from "../../repositories/routes.repositories.interface";
 
 export class CreateRouteUseCase {
   constructor(private routesRepository: IRoutesRepository) {}

@@ -1,5 +1,5 @@
 import { TestingDiContainer } from "@/__tests__/utils/mock_container";
-import { signInUserInfo } from "@/__tests__/utils/sign-in";
+import { signInUserInfo } from "@/__tests__/utils/helpers";
 import { BadRequestError } from "@/src/domain/entities/errors/payload";
 
 const createProjectUseCase = TestingDiContainer.get("CreateProjectsUseCase");

@@ -1,4 +1,3 @@
-"use server";
 import { DeleteRouteInput, DeleteRouteOutput } from "./types";
 import { IRoutesRepository } from "../../repositories/routes.repositories.interface";
 

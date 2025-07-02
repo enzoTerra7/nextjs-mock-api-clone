@@ -1,5 +1,5 @@
-import { IRoutesRepository } from "@/src/application/repositories/routes.repositories.interface";
-import { GetAllRoutesUseCase } from "@/src/application/use-cases/routes/get-all-routes";
+import { IRoutesRepository } from "@application/repositories/routes.repositories.interface";
+import { GetAllRoutesUseCase } from "@application/use-cases/routes/get-all-routes";
 
 export function getAllRoutesUseCaseFactory(
   routesRepository: IRoutesRepository

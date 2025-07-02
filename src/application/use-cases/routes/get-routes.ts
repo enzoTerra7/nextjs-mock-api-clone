@@ -1,4 +1,3 @@
-"use server";
 import { GetRoutesInput, GetRouteOutput } from "./types";
 import { IRoutesRepository } from "../../repositories/routes.repositories.interface";
 
