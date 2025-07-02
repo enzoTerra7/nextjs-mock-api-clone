@@ -28,7 +28,7 @@ export const routesTable = pgTable("routes", {
       onDelete: "restrict",
     }),
 
-  route_path: text("route_name").notNull(),
+  route_path: text("route_path").notNull(),
 
   schema: jsonb("schema").notNull(),
 

@@ -6,6 +6,7 @@ import { Project } from "@/src/domain/entities/models/project.entities";
 import { generateKSUID } from "@/shared/generate_id";
 import { ProjectsSchema } from "../../database/schemas";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
+import { NotFoundError } from "@/src/domain/entities/errors/payload";
 
 export class KnexProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -52,5 +53,27 @@ export class KnexProjectsRepository implements IProjectsRepository {
       .where("id", input.project_id)
       .andWhere("user_id", input.user_id);
     return;
+  }
+
+  async getProjectById(id: string): Promise<Project> {
+    const project = await knexDb("projects")
+      .select("*")
+      .where("id", id)
+      .first();
+
+    if (!project) {
+      throw new NotFoundError("Project not exist");
+    }
+
+    const project_routes = await knexDb("routes").select(
+      "route_path",
+      "id",
+      "route_type"
+    );
+
+    return {
+      ...project,
+      routes: project_routes,
+    };
   }
 }

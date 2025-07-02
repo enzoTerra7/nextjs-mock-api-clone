@@ -11,6 +11,12 @@ export type GetAllProjectsInput = {
 
 export type GetAllProjectsOutput = Promise<Project[]>;
 
+export type GetProjectByIdInput = {
+  project_id: string;
+};
+
+export type GetProjectByIdOutput = Promise<Project>;
+
 export type CreateProjectInput = {
   name: string;
   user_id: string;

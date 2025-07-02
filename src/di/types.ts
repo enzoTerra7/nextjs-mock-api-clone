@@ -1,3 +1,4 @@
+import { GetProjectByIdUseCase } from "./../application/use-cases/projects/get-id";
 import { SignUpUseCase } from "./../application/use-cases/auth/sign-up";
 import { IUsersRepository } from "../application/repositories/users.repository.interface";
 import { SignInUseCase } from "../application/use-cases/auth/sign-in";
@@ -24,9 +25,10 @@ export interface DI_RETURN_TYPES {
   SignInUseCase: SignInUseCase;
   SignUpUseCase: SignUpUseCase;
   GetAllProjectsUseCase: GetAllProjectsUseCase;
+  GetProjectByIdUseCase: GetProjectByIdUseCase;
   CreateProjectsUseCase: CreateProjectsUseCase;
   DeleteProjectsUseCase: DeleteProjectsUseCase;
-  
+
   CreateRouteUseCase: CreateRouteUseCase;
   DeleteRouteUseCase: DeleteRouteUseCase;
   GetAllRoutesTypesUseCase: GetAllRoutesTypesUseCase;

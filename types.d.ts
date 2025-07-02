@@ -18,3 +18,8 @@ declare module "knex/types/tables" {
     data_builder_types: DataBuilderTypeSchema;
   }
 }
+
+export type PageProps<P = unknown, S = unknown> = {
+  params: Promise<P>;
+  searchParams: Promise<S>;
+};

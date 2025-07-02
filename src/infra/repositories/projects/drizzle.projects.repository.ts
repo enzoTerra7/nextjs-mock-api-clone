@@ -6,6 +6,7 @@ import { projectsTable } from "../../database/schemas";
 import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
 import { eq } from "drizzle-orm";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
+import { NotFoundError } from "@/src/domain/entities/errors/payload";
 
 export class DrizzleProjectsRepository implements IProjectsRepository {
   constructor() {}
@@ -52,5 +53,29 @@ export class DrizzleProjectsRepository implements IProjectsRepository {
     );
 
     return;
+  }
+
+  async getProjectById(id: string): Promise<Project> {
+    const project = await DrizzleDb.query.projectsTable.findFirst({
+      where: (project, { eq }) => eq(project.id, id),
+    });
+
+    if (!project) {
+      throw new NotFoundError("Project not exists");
+    }
+
+    const routes = await DrizzleDb.query.routesTable.findMany({
+      where: (route, { eq }) => eq(route.project_id, id),
+      columns: {
+        route_path: true,
+        id: true,
+        route_type: true,
+      },
+    });
+
+    return {
+      ...project,
+      routes,
+    };
   }
 }

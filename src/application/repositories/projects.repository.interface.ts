@@ -4,7 +4,7 @@ import { IProjectInputDelete } from "../validators/project/project.input.delete"
 
 export interface IProjectsRepository {
   getAllProjects(user_id: string): Promise<Project[]>;
-  // getProjectById(id: string): Promise<Project | undefined>;
+  getProjectById(id: string): Promise<Project>;
   createProject(input: IProjectInputCreate): Promise<Project>;
   deleteProject(input: IProjectInputDelete): Promise<void>;
 }

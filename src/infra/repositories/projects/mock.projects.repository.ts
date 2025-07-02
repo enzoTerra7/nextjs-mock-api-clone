@@ -3,7 +3,10 @@ import { ProjectsSchema } from "../../database/schemas";
 import { IProjectsRepository } from "@/src/application/repositories/projects.repository.interface";
 import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
 import { Project } from "@/src/domain/entities/models/project.entities";
-import { BadRequestError } from "@/src/domain/entities/errors/payload";
+import {
+  BadRequestError,
+  NotFoundError,
+} from "@/src/domain/entities/errors/payload";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
 
 export class MockProjectsRepository implements IProjectsRepository {
@@ -88,5 +91,18 @@ export class MockProjectsRepository implements IProjectsRepository {
     this._projects.slice(index, 1);
 
     return;
+  }
+
+  async getProjectById(id: string): Promise<Project> {
+    const project = this._projects.find((project) => project.id === id);
+
+    if (!project) {
+      throw new NotFoundError("Project not exist");
+    }
+
+    return {
+      ...project,
+      routes: [],
+    };
   }
 }
