@@ -16,6 +16,7 @@ import { GetAllRoutesUseCase } from "@/src/application/use-cases/routes/get-all-
 import { GetRoutesTypesUseCase } from "@/src/application/use-cases/routes/get-routes-types";
 import { GetRouteUseCase } from "@/src/application/use-cases/routes/get-routes";
 import { GetProjectByIdUseCase } from "@/src/application/use-cases/projects/get-id";
+import { GetProjectRoutesUseCase } from "@/src/application/use-cases/projects/get-project-routes";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -40,6 +41,9 @@ const resolver: {
   },
   get GetProjectByIdUseCase() {
     return new GetProjectByIdUseCase(this.ProjectRepository);
+  },
+  get GetProjectRoutesUseCase() {
+    return new GetProjectRoutesUseCase(this.ProjectRepository);
   },
   get CreateProjectsUseCase() {
     return new CreateProjectsUseCase(this.ProjectRepository);

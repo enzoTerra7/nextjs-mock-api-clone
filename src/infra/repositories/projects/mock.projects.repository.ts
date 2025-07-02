@@ -111,7 +111,53 @@ export class MockProjectsRepository implements IProjectsRepository {
       return [];
     }
 
-    const routes: Routes[] = [];
+    const routes: Routes[] = [
+      {
+        created_at: new Date().toISOString(),
+        data_builder_id: generateKSUID(),
+        id: generateKSUID(),
+        project_id: id,
+        route_path: generateKSUID(),
+        route_type: "GET",
+        schema: {},
+      },
+      {
+        created_at: new Date().toISOString(),
+        data_builder_id: generateKSUID(),
+        id: generateKSUID(),
+        project_id: id,
+        route_path: generateKSUID(),
+        route_type: "POST",
+        schema: {},
+      },
+      {
+        created_at: new Date().toISOString(),
+        data_builder_id: generateKSUID(),
+        id: generateKSUID(),
+        project_id: id,
+        route_path: generateKSUID(),
+        route_type: "PUT",
+        schema: {},
+      },
+      {
+        created_at: new Date().toISOString(),
+        data_builder_id: generateKSUID(),
+        id: generateKSUID(),
+        project_id: id,
+        route_path: generateKSUID(),
+        route_type: "PATCH",
+        schema: {},
+      },
+      {
+        created_at: new Date().toISOString(),
+        data_builder_id: generateKSUID(),
+        id: generateKSUID(),
+        project_id: id,
+        route_path: generateKSUID(),
+        route_type: "DELETE",
+        schema: {},
+      },
+    ];
 
     return routes;
   }
