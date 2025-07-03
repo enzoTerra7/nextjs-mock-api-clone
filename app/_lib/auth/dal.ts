@@ -1,5 +1,4 @@
-import "server-only";
-
+"use server";
 import { cookies } from "next/headers";
 import { cache } from "react";
 import { redirect } from "next/navigation";
@@ -15,7 +14,7 @@ export const verifySession = cache(async () => {
 
   return {
     ...session,
-    isAuth: true
+    isAuth: true,
   };
 });
 
@@ -28,3 +27,10 @@ export const getSession = cache(async () => {
 
   return session;
 });
+
+export const signOut = async () => {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("session");
+  redirect("/");
+};

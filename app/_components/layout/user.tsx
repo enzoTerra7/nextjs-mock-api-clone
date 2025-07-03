@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { User2Icon, LogOut } from "lucide-react";
+import { SignoutItem } from "./sign-out.item";
 
 export async function UserHeaderItem() {
   const session = await verifySession();
@@ -30,10 +31,12 @@ export async function UserHeaderItem() {
         <DropdownMenuGroup>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">
-            <LogOut />
-            Sign out
-          </DropdownMenuItem>
+          <SignoutItem>
+            <DropdownMenuItem variant="destructive">
+              <LogOut />
+              Sign out
+            </DropdownMenuItem>
+          </SignoutItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
