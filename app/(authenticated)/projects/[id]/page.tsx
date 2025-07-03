@@ -5,6 +5,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/app/_components/ui/button";
 import { Suspense } from "react";
 import { ProjectRoutesContainer } from "./_components/projectId.routes.container";
+import { PlusCircle } from "lucide-react";
 
 export default async function ProjectIdPage({
   params,
@@ -28,7 +29,14 @@ export default async function ProjectIdPage({
           })}
           href="/projects"
         >
-          Voltar
+          Go back
+        </Link>
+        <Link
+          className={buttonVariants({})}
+          href={`/projects/${id}/create-route`}
+        >
+          <PlusCircle />
+          Create Route
         </Link>
       </PageTitle>
       <Suspense>
