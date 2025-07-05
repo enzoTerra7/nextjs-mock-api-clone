@@ -10,3 +10,15 @@ export const getAllBuildersType = cache(async () => {
 
   return buildersType;
 });
+
+export const getBuildersByType = cache(async (builder_type: string) => {
+  const getAllBuildersByTypeUseCase = DiContainer.get(
+    "GetAllBuildersByTypeUseCase"
+  );
+
+  const builders = await getAllBuildersByTypeUseCase.execute({
+    data_builder_id: builder_type,
+  });
+
+  return builders;
+});

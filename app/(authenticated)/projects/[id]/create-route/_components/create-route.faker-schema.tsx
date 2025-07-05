@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { CreateRouteSchemaFormType } from "../definitions";
 import { PageTitle } from "@/app/_components/ui/page-title";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Input } from "@/app/_components/ui/input";
 import {
   FormControl,
@@ -13,11 +13,19 @@ import {
 } from "@/app/_components/ui/form";
 import { Button } from "@/app/_components/ui/button";
 import { Plus } from "lucide-react";
-// import { DataBuilder } from "@/src/domain/entities/models/data-builder.entities";
+import { DataBuilder } from "@/src/domain/entities/models/data-builder.entities";
+import { getBuildersByType } from "../action";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/_components/ui/select";
 
 export default function CreateRouteFakerSchemaBuilder() {
   const form: CreateRouteSchemaFormType = useFormContext();
-  // const [builders, setBuilders] = useState<DataBuilder[]>([]);
+  const [builders, setBuilders] = useState<DataBuilder[]>([]);
 
   const schema = form.watch("schema");
 
@@ -29,7 +37,15 @@ export default function CreateRouteFakerSchemaBuilder() {
     form.setValue("schema", newSchemaArray);
   }
 
-  function addNewField() {
+  function onUpdateValueInput(value: string, index: number) {
+    const workableItem = schema[index];
+    workableItem.value = value;
+    const newSchemaArray = [...schema];
+    newSchemaArray[index] = workableItem;
+    form.setValue("schema", newSchemaArray);
+  }
+
+  function onAddNewField() {
     const newSchemaArray = [...schema];
     newSchemaArray.push({
       key: "",
@@ -38,11 +54,20 @@ export default function CreateRouteFakerSchemaBuilder() {
     form.setValue("schema", newSchemaArray);
   }
 
-  function removeRow(index: number) {
+  function onRemoveRow(index: number) {
     const newSchemaArray = [...schema];
     newSchemaArray.splice(index, 1);
     form.setValue("schema", newSchemaArray);
   }
+
+  useEffect(() => {
+    async function getAllFakerBuilders() {
+      const builders = await getBuildersByType("FAKER");
+      setBuilders(builders);
+    }
+
+    getAllFakerBuilders();
+  });
 
   return (
     <>
@@ -83,10 +108,37 @@ export default function CreateRouteFakerSchemaBuilder() {
               />
             </div>
             <div className="col-span-2">
-              <Input />
+              <FormField
+                control={form.control}
+                name="schema"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={(value) =>
+                        onUpdateValueInput(value, index)
+                      }
+                      defaultValue={field.value[index].key}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a HTTP method" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {builders.map((builder) => (
+                          <SelectItem key={builder.name} value={builder.name}>
+                            {builder.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <Button
-              onClick={() => removeRow(index)}
+              onClick={() => onRemoveRow(index)}
               className="w-fit"
               variant={"destructive"}
             >
@@ -95,7 +147,7 @@ export default function CreateRouteFakerSchemaBuilder() {
           </DataRow>
         ))}
       </div>
-      <Button size={"icon"} onClick={addNewField}>
+      <Button size={"icon"} onClick={onAddNewField}>
         <Plus />
       </Button>
     </>

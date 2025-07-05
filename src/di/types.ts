@@ -17,6 +17,7 @@ import { GetRouteUseCase } from "../application/use-cases/routes/get-routes";
 import { GetProjectRoutesUseCase } from "../application/use-cases/projects/get-project-routes";
 import { IDataBuilderRepository } from "../application/repositories/data-builder.repository.interface";
 import { GetAllDataBuilderTypesUseCase } from "../application/use-cases/data-builder/get-all-types";
+import { GetAllBuildersByTypeUseCase } from "../application/use-cases/data-builder/get-all-builders-by-type";
 
 export interface DI_RETURN_TYPES {
   // Repositories
@@ -42,6 +43,7 @@ export interface DI_RETURN_TYPES {
   GetRouteUseCase: GetRouteUseCase;
 
   GetAllBuildersTypeUseCase: GetAllDataBuilderTypesUseCase;
+  GetAllBuildersByTypeUseCase: GetAllBuildersByTypeUseCase;
 
   // Services
   CryptoService: ICryptoService;
