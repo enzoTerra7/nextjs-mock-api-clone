@@ -16,6 +16,7 @@ import { getRouteTypeUseCaseFactory } from "./factories/use-cases/routes/get-rou
 import { getRouteUseCaseFactory } from "./factories/use-cases/routes/get-route.use-case.factory";
 import { getProjectByIdUseCaseFactory } from "./factories/use-cases/projects/get-by-id.use-case.factory";
 import { getProjectRoutesUseCaseFactory } from "./factories/use-cases/projects/get-project-routes";
+import { createDataBuilderRepositoryFactory } from "./factories/repositories/data-builder.repository.factory";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -27,6 +28,7 @@ const resolver: {
   UserRepository: createUserRepositoryFactory(),
   ProjectRepository: createProjectRepositoryFactory(),
   RoutesRepository: createRoutesRepositoryFactory(),
+  DataBuilderRepository: createDataBuilderRepositoryFactory(),
 
   // use cases
   get SignInUseCase() {

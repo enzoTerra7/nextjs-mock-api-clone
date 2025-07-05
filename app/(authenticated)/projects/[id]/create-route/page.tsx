@@ -1,16 +1,16 @@
-"use client";
 import { buttonVariants } from "@/app/_components/ui/button";
 import { PageTitle } from "@/app/_components/ui/page-title";
 import { PageProps } from "@/types";
 import Link from "next/link";
-import { use } from "react";
+import { Suspense } from "react";
+import { CreateRouteForm } from "./_components/create-route.form";
 
-export default function CreateRoutePage({
+export default async function CreateRoutePage({
   params,
 }: PageProps<{
   id: string;
 }>) {
-  const { id } = use(params);
+  const { id } = await params;
   return (
     <>
       <PageTitle
@@ -26,6 +26,10 @@ export default function CreateRoutePage({
           Go back
         </Link>
       </PageTitle>
+      <Suspense>
+        <CreateRouteForm />
+      </Suspense>
     </>
   );
 }
+

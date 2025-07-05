@@ -15,12 +15,14 @@ import { GetAllRoutesUseCase } from "../application/use-cases/routes/get-all-rou
 import { GetRoutesTypesUseCase } from "../application/use-cases/routes/get-routes-types";
 import { GetRouteUseCase } from "../application/use-cases/routes/get-routes";
 import { GetProjectRoutesUseCase } from "../application/use-cases/projects/get-project-routes";
+import { IDataBuilderRepository } from "../application/repositories/data-builder.repository.interface";
 
 export interface DI_RETURN_TYPES {
   // Repositories
   UserRepository: IUsersRepository;
   ProjectRepository: IProjectsRepository;
   RoutesRepository: IRoutesRepository;
+  DataBuilderRepository: IDataBuilderRepository;
 
   // Use-cases
   SignInUseCase: SignInUseCase;
