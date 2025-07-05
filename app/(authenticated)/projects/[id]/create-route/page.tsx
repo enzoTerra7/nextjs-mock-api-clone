@@ -4,6 +4,8 @@ import { PageProps } from "@/types";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CreateRouteForm } from "./_components/create-route.form";
+import { CreateRouteFormLoader } from "./_components/create-route.loader-form";
+import { getAllBuildersType } from "./action";
 
 export default async function CreateRoutePage({
   params,
@@ -11,6 +13,7 @@ export default async function CreateRoutePage({
   id: string;
 }>) {
   const { id } = await params;
+  const buildersTypePromise = getAllBuildersType();
   return (
     <>
       <PageTitle
@@ -26,10 +29,9 @@ export default async function CreateRoutePage({
           Go back
         </Link>
       </PageTitle>
-      <Suspense>
-        <CreateRouteForm />
+      <Suspense fallback={<CreateRouteFormLoader />}>
+        <CreateRouteForm buildersTypePromise={buildersTypePromise} />
       </Suspense>
     </>
   );
 }
-

@@ -1,3 +1,4 @@
+"use client";
 import {
   FormControl,
   FormField,
@@ -14,9 +15,16 @@ import {
   SelectValue,
 } from "@/app/_components/ui/select";
 import { Input } from "@/app/_components/ui/input";
+import { use } from "react";
+import { DataBuilderType } from "@/src/domain/entities/models/data-builder-type.entities";
 
-export function CreateRouteMainInformation() {
+export function CreateRouteMainInformation({
+  buildersTypePromise,
+}: {
+  buildersTypePromise: Promise<DataBuilderType[]>;
+}) {
   const form: CreateRouteSchemaFormType = useFormContext();
+  const builderTypes = use(buildersTypePromise);
 
   return (
     <>
@@ -55,6 +63,29 @@ export function CreateRouteMainInformation() {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="data_builder_id"
+          render={({ field }) => (
+            <FormItem>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select the builder method" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {builderTypes.map((builderType) => (
+                    <SelectItem key={builderType.name} value={builderType.name}>
+                      {builderType.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

@@ -17,6 +17,7 @@ import { getRouteUseCaseFactory } from "./factories/use-cases/routes/get-route.u
 import { getProjectByIdUseCaseFactory } from "./factories/use-cases/projects/get-by-id.use-case.factory";
 import { getProjectRoutesUseCaseFactory } from "./factories/use-cases/projects/get-project-routes";
 import { createDataBuilderRepositoryFactory } from "./factories/repositories/data-builder.repository.factory";
+import { getAllBuildersTypeUseCase } from "./factories/use-cases/data-builder/get-all-types";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -70,6 +71,10 @@ const resolver: {
   get GetRouteUseCase() {
     return getRouteUseCaseFactory(this.RoutesRepository);
   },
+
+  get GetAllBuildersTypeUseCase() {
+    return getAllBuildersTypeUseCase(this.DataBuilderRepository)
+  }
 };
 
 export class DiContainer {

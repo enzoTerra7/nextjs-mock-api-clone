@@ -5,7 +5,12 @@ export const createRouteSchema = z.object({
   route_type: z.string(),
   route_path: z.string(),
   data_builder_id: z.string(),
-  schema: z.record(z.string(), z.string()),
+  schema: z.array(
+    z.object({
+      key: z.string(),
+      value: z.string(),
+    })
+  ),
 });
 
 type CreateRouteSchemaType = z.infer<typeof createRouteSchema>;
@@ -14,7 +19,7 @@ export const createRouteInitialState: CreateRouteSchemaType = {
   data_builder_id: "",
   route_path: "",
   route_type: "",
-  schema: {},
+  schema: [],
 };
 
 export type CreateRouteSchemaFormType = UseFormReturn<
