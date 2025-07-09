@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createRouteSchema } from "../definitions";
+import { aiSchemaDefault, createRouteSchema } from "../definitions";
 import { Form } from "@/app/_components/ui/form";
 import { CreateRouteMainInformation } from "./create-route.main-information";
 import { DataBuilderType } from "@/src/domain/entities/models/data-builder-type.entities";
@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import { DataBuilder } from "@/src/domain/entities/models/data-builder.entities";
 import { Suspense } from "react";
 import { Button } from "@/app/_components/ui/button";
+import { CreateRouterAiSchemaBuilder } from "./create-router.ai-schema";
 
 const CreateRouteFakerSchemaBuilder = dynamic(
   () => import("./create-route.faker-schema"),
@@ -28,6 +29,7 @@ export function CreateRouteForm({
     FAKER: (
       <CreateRouteFakerSchemaBuilder getFakerBuilders={getFakerBuilders} />
     ),
+    AI: <CreateRouterAiSchemaBuilder />,
   };
 
   const form = useForm({
@@ -41,7 +43,7 @@ export function CreateRouteForm({
     form.resetField("route_type");
 
     if (builderType === "AI") {
-      form.setValue("schema", "");
+      form.setValue("schema", aiSchemaDefault);
     }
 
     if (builderType === "FAKER") {

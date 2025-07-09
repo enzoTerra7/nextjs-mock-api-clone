@@ -23,3 +23,5 @@ export type PageProps<P = unknown, S = unknown> = {
   params: Promise<P>;
   searchParams: Promise<S>;
 };
+
+export type VoidFunction<T = undefined> = (e: T) => void;

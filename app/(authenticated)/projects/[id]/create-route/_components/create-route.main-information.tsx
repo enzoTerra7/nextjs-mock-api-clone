@@ -6,7 +6,7 @@ import {
   FormMessage,
 } from "@/app/_components/ui/form";
 import { useFormContext } from "react-hook-form";
-import { CreateRouteSchemaFormType } from "../definitions";
+import { aiSchemaDefault, CreateRouteSchemaFormType } from "../definitions";
 import {
   Select,
   SelectContent,
@@ -78,7 +78,7 @@ export function CreateRouteMainInformation({
                     form.setValue("schema", []);
                   }
                   if (value === "AI") {
-                    form.setValue("schema", "");
+                    form.setValue("schema", aiSchemaDefault);
                   }
                   field.onChange(value);
                 }}

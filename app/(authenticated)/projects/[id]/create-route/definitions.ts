@@ -27,9 +27,24 @@ export const createRouteSchema = z.discriminatedUnion("data_builder_id", [
 
 type CreateRouteSchemaType = z.infer<typeof createRouteSchema>;
 
-
 export type CreateRouteSchemaFormType = UseFormReturn<
   CreateRouteSchemaType,
   unknown,
   CreateRouteSchemaType
 >;
+
+export const aiSchemaDefault = `interface User {
+  id: number;
+  name: string;
+  email: string;
+  isActive: boolean;
+  createdAt: Date;
+}
+
+type Response = {
+  data: Array<User>;
+  total: number;
+  pages: number;
+  size: number;
+}
+`;
