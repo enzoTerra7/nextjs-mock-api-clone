@@ -34,6 +34,10 @@ export function CreateRouteForm({
 
   const form = useForm({
     resolver: zodResolver(createRouteSchema),
+    defaultValues: {
+      route_type: "",
+      route_path: "",
+    },
   });
 
   const builderType = form.watch("data_builder_id");
@@ -53,7 +57,13 @@ export function CreateRouteForm({
   return (
     <>
       <Form {...form}>
-        <form onReset={onFormReset} className="w-full space-y-4">
+        <form
+          onSubmit={form.handleSubmit((values) =>
+            console.log("sended values", values)
+          )}
+          onReset={onFormReset}
+          className="w-full space-y-4"
+        >
           <CreateRouteMainInformation
             buildersTypePromise={buildersTypePromise}
           />

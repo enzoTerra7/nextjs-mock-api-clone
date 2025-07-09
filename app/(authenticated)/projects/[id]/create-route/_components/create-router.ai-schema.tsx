@@ -6,15 +6,12 @@ import { aiSchemaDefault, CreateRouteSchemaFormType } from "../definitions";
 import { Button } from "@/app/_components/ui/button";
 import { toast } from "sonner";
 import TypeScriptEditor from "@/app/_components/ui/typescript-editor";
+import { FormField, FormItem, FormMessage } from "@/app/_components/ui/form";
 
 export function CreateRouterAiSchemaBuilder() {
   const form: CreateRouteSchemaFormType = useFormContext();
 
   const schema = form.watch("schema") as string;
-
-  function onUpdateCode(code: string) {
-    form.setValue("schema", code);
-  }
 
   function onResetCode() {
     form.setValue("schema", aiSchemaDefault);
@@ -51,7 +48,19 @@ export function CreateRouterAiSchemaBuilder() {
           <strong>&apos;Response&apos;</strong>
         </p>
       </div>
-      <TypeScriptEditor code={schema} setCode={onUpdateCode} />
+      <FormField
+        control={form.control}
+        name="schema"
+        render={({ field }) => (
+          <FormItem>
+            <TypeScriptEditor
+              code={field.value as string}
+              setCode={field.onChange}
+            />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 }
