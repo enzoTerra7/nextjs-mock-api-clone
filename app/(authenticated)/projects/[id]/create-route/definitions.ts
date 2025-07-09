@@ -1,10 +1,10 @@
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
-export const createRouteSchema = z.object({
+const fakerSchema = z.object({
+  data_builder_id: z.literal("FAKER"),
   route_type: z.string(),
   route_path: z.string(),
-  data_builder_id: z.string(),
   schema: z.array(
     z.object({
       key: z.string(),
@@ -13,14 +13,20 @@ export const createRouteSchema = z.object({
   ),
 });
 
+const aiSchema = z.object({
+  data_builder_id: z.literal("AI"),
+  route_type: z.string(),
+  route_path: z.string(),
+  schema: z.string(), // texto livre
+});
+
+export const createRouteSchema = z.discriminatedUnion("data_builder_id", [
+  fakerSchema,
+  aiSchema,
+]);
+
 type CreateRouteSchemaType = z.infer<typeof createRouteSchema>;
 
-export const createRouteInitialState: CreateRouteSchemaType = {
-  data_builder_id: "",
-  route_path: "",
-  route_type: "",
-  schema: [],
-};
 
 export type CreateRouteSchemaFormType = UseFormReturn<
   CreateRouteSchemaType,

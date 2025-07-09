@@ -65,7 +65,9 @@ export function ProjectModalCreation({ children }: PropsWithChildren) {
             >
               Cancel
             </DialogClose>
-            <Button isLoading={isPending}>Save</Button>
+            <Button type="submit" isLoading={isPending}>
+              Save
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { CreateRouteSchemaFormType } from "../definitions";
 import { PageTitle } from "@/app/_components/ui/page-title";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, use, useMemo } from "react";
 import { Input } from "@/app/_components/ui/input";
 import {
   FormControl,
@@ -14,20 +14,17 @@ import {
 import { Button } from "@/app/_components/ui/button";
 import { Plus } from "lucide-react";
 import { DataBuilder } from "@/src/domain/entities/models/data-builder.entities";
-import { getBuildersByType } from "../action";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
+import { Combobox } from "@/app/_components/ui/combobox";
 
-export default function CreateRouteFakerSchemaBuilder() {
+export default function CreateRouteFakerSchemaBuilder({
+  getFakerBuilders,
+}: {
+  getFakerBuilders: Promise<DataBuilder[]>;
+}) {
   const form: CreateRouteSchemaFormType = useFormContext();
-  const [builders, setBuilders] = useState<DataBuilder[]>([]);
+  const builders = use(getFakerBuilders);
 
-  const schema = form.watch("schema");
+  const schema = form.watch("schema") as { key: string; value: string }[];
 
   function onUpdateKeyInput(value: string, index: number) {
     const workableItem = schema[index];
@@ -60,14 +57,14 @@ export default function CreateRouteFakerSchemaBuilder() {
     form.setValue("schema", newSchemaArray);
   }
 
-  useEffect(() => {
-    async function getAllFakerBuilders() {
-      const builders = await getBuildersByType("FAKER");
-      setBuilders(builders);
-    }
-
-    getAllFakerBuilders();
-  });
+  const buildersOptions = useMemo(
+    () =>
+      builders.map((builder) => ({
+        label: builder.name,
+        value: builder.name.trim(),
+      })),
+    [builders]
+  );
 
   return (
     <>
@@ -99,6 +96,7 @@ export default function CreateRouteFakerSchemaBuilder() {
                         onChange={(e) =>
                           onUpdateKeyInput(e.target.value, index)
                         }
+                        // @ts-expect-error this always will be rendered in the FAKER scenario
                         value={field.value[index].key}
                       />
                     </FormControl>
@@ -113,25 +111,15 @@ export default function CreateRouteFakerSchemaBuilder() {
                 name="schema"
                 render={({ field }) => (
                   <FormItem>
-                    <Select
-                      onValueChange={(value) =>
-                        onUpdateValueInput(value, index)
-                      }
-                      defaultValue={field.value[index].key}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a HTTP method" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {builders.map((builder) => (
-                          <SelectItem key={builder.name} value={builder.name}>
-                            {builder.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <Combobox
+                      items={buildersOptions}
+                      onChange={(value) => onUpdateValueInput(value, index)}
+                      // @ts-expect-error this always will be rendered in the FAKER scenario
+                      value={field.value[index].value}
+                      placeholder="Select a builder"
+                      searchPlaceholder="Search a builder"
+                      emptyText="No builder found"
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

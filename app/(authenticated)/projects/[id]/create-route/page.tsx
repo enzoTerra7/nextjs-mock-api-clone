@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { CreateRouteForm } from "./_components/create-route.form";
 import { CreateRouteFormLoader } from "./_components/create-route.loader-form";
-import { getAllBuildersType } from "./action";
+import { getAllBuildersType, getBuildersByType } from "./action";
 
 export default async function CreateRoutePage({
   params,
@@ -14,6 +14,7 @@ export default async function CreateRoutePage({
 }>) {
   const { id } = await params;
   const buildersTypePromise = getAllBuildersType();
+  const fakerBuilders = getBuildersByType("FAKER");
   return (
     <>
       <PageTitle
@@ -30,7 +31,10 @@ export default async function CreateRoutePage({
         </Link>
       </PageTitle>
       <Suspense fallback={<CreateRouteFormLoader />}>
-        <CreateRouteForm buildersTypePromise={buildersTypePromise} />
+        <CreateRouteForm
+          getFakerBuilders={fakerBuilders}
+          buildersTypePromise={buildersTypePromise}
+        />
       </Suspense>
     </>
   );

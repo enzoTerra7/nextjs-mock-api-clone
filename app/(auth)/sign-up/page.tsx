@@ -46,7 +46,7 @@ export default function SignUp() {
         <Input type="text" name="username" placeholder="Username" required />
 
         <div className="flex flex-col w-full justify-center items-center gap-2 space-y-0">
-          <Button className="w-full">Sign up</Button>
+          <Button className="w-full" type="submit">Sign up</Button>
           <p className="text-xs text-center text-muted-foreground">
             On continue, you agree with our&apos;s terms.
           </p>

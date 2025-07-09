@@ -72,7 +72,18 @@ export function CreateRouteMainInformation({
           name="data_builder_id"
           render={({ field }) => (
             <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={(value) => {
+                  if (value === "FAKER") {
+                    form.setValue("schema", []);
+                  }
+                  if (value === "AI") {
+                    form.setValue("schema", "");
+                  }
+                  field.onChange(value);
+                }}
+                defaultValue={field.value}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select the builder method" />
