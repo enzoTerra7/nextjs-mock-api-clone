@@ -5,16 +5,17 @@ import { Input } from "@/app/_components/ui/input";
 import Link from "next/link";
 import { useServerAction } from "zsa-react";
 import { signUpAction } from "./action";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function SignUp() {
   const { execute } = useServerAction(signUpAction, {
-    onSuccess(data) {
-      alert("success");
-      console.log("user", data);
+    onSuccess() {
+      toast.success("Sign up successfully!");
+      redirect("/projects");
     },
     onError(error) {
-      alert("error");
-      console.log(error);
+      toast.error(error.err.message);
     },
   });
   return (
@@ -29,7 +30,8 @@ export default function SignUp() {
             username: form.get("username") as string,
           });
         }}
-        className="space-y-4">
+        className="space-y-4"
+      >
         <Input type="email" name="email" placeholder="Email" required />
         <Input
           type="password"
@@ -46,7 +48,9 @@ export default function SignUp() {
         <Input type="text" name="username" placeholder="Username" required />
 
         <div className="flex flex-col w-full justify-center items-center gap-2 space-y-0">
-          <Button className="w-full" type="submit">Sign up</Button>
+          <Button className="w-full" type="submit">
+            Sign up
+          </Button>
           <p className="text-xs text-center text-muted-foreground">
             On continue, you agree with our&apos;s terms.
           </p>

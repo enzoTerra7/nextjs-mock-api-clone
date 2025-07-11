@@ -10,6 +10,7 @@ import { Routes } from "@/src/domain/entities/models/routes.entities";
 import { IRoutesInputCreate } from "@/src/application/validators/routes/route.input.create";
 import { IRoutesInputDelete } from "@/src/application/validators/routes/route.input.delete";
 import { IRoutesInputValidateProject } from "@/src/application/validators/routes/route.input.validate-project";
+import { generateKSUID } from "@/shared/generate_id";
 
 export class KnexRoutesRepository implements IRoutesRepository {
   constructor() {}
@@ -81,16 +82,16 @@ export class KnexRoutesRepository implements IRoutesRepository {
       throw new BadRequestError("Invalid body");
     }
 
-    const route = await knexDb("routes")
+    const [route] = await knexDb("routes")
       .insert({
         project_id: input.project_id,
-        data_builder_id: input.data_builder_id,
+        data_builder_types: input.data_builder_types,
         route_path: input.route_path,
         route_type: input.route_type,
-        schema: {},
+        schema: input.schema,
+        id: generateKSUID(),
       })
-      .returning("*")
-      .first();
+      .returning("*");
 
     return route!;
   }

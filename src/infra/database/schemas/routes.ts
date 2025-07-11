@@ -1,13 +1,14 @@
 import { pgTable, text, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { projectsTable } from "./projects";
 import { generateKSUID } from "@/shared/generate_id";
+import { dataBuilderTypesTable } from "./data_builder";
 
 export interface RoutesSchema {
   id: string;
   route_type: string;
   schema: Record<string, string>;
   project_id: string;
-  data_builder_id: string;
+  data_builder_types: string;
   created_at: string;
   route_path: string;
 }
@@ -38,9 +39,9 @@ export const routesTable = pgTable("routes", {
       onDelete: "cascade",
     }),
 
-  data_builder_id: text("data_builder_id")
+  data_builder_types: text("data_builder_types")
     .notNull()
-    .references(() => projectsTable.id, {
+    .references(() => dataBuilderTypesTable.name, {
       onDelete: "cascade",
     }),
 

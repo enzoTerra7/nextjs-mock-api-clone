@@ -32,6 +32,7 @@ export default async function CreateRoutePage({
       </PageTitle>
       <Suspense fallback={<CreateRouteFormLoader />}>
         <CreateRouteForm
+          projectId={id}
           getFakerBuilders={fakerBuilders}
           buildersTypePromise={buildersTypePromise}
         />

@@ -11,6 +11,7 @@ import { cn } from "@/app/_lib/utils";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
 import { Eye, Trash } from "lucide-react";
 import { use } from "react";
+import { ProjectIdRouteModalDelete } from "./projectId.routes.delete";
 
 const routesTypeColor = {
   GET: "bg-emerald-100 dark:bg-emerald-900",
@@ -64,7 +65,7 @@ function ProjectRoutes({
           {routes.map((route) => (
             <div
               className={cn(
-                "flex items-center justify-between w-full px-2 py-3.5 hover:bg-card/45 rounded-md"
+                "flex items-center border-b border-accent/95 last:border-none justify-between w-full px-2 py-3.5 hover:bg-card/45 rounded-md"
               )}
               key={route.id}
             >
@@ -73,9 +74,14 @@ function ProjectRoutes({
                 <Button variant={"outline"} size={"icon"}>
                   <Eye />
                 </Button>
-                <Button variant={"outline"} size={"icon"}>
-                  <Trash />
-                </Button>
+                <ProjectIdRouteModalDelete
+                  project_id={route.project_id}
+                  route_id={route.id}
+                >
+                  <Button variant={"outline"} size={"icon"}>
+                    <Trash />
+                  </Button>
+                </ProjectIdRouteModalDelete>
               </div>
             </div>
           ))}

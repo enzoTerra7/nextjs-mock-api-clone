@@ -10,6 +10,10 @@ import { DataBuilder } from "@/src/domain/entities/models/data-builder.entities"
 import { Suspense } from "react";
 import { Button } from "@/app/_components/ui/button";
 import { CreateRouterAiSchemaBuilder } from "./create-router.ai-schema";
+import { useServerAction } from "zsa-react";
+import { createRoute } from "../action";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const CreateRouteFakerSchemaBuilder = dynamic(
   () => import("./create-route.faker-schema"),
@@ -21,9 +25,11 @@ const CreateRouteFakerSchemaBuilder = dynamic(
 export function CreateRouteForm({
   buildersTypePromise,
   getFakerBuilders,
+  projectId,
 }: {
   buildersTypePromise: Promise<DataBuilderType[]>;
   getFakerBuilders: Promise<DataBuilder[]>;
+  projectId: string;
 }) {
   const builderComponent = {
     FAKER: (
@@ -39,6 +45,17 @@ export function CreateRouteForm({
       route_path: "",
     },
   });
+
+  const { execute: executeCreateRoute, isPending: isCreatingRoute } =
+    useServerAction(createRoute, {
+      onSuccess() {
+        toast.success("Create route successfully!");
+        redirect(`/projects/${projectId}`);
+      },
+      onError(error) {
+        toast.error(error.err.message);
+      },
+    });
 
   const builderType = form.watch("data_builder_id");
 
@@ -59,7 +76,10 @@ export function CreateRouteForm({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((values) =>
-            console.log("sended values", values)
+            executeCreateRoute({
+              ...values,
+              project_id: projectId,
+            })
           )}
           onReset={onFormReset}
           className="w-full space-y-4"
@@ -72,10 +92,16 @@ export function CreateRouteForm({
           </Suspense>
           {builderType && (
             <div className="flex flex-col items-center lg:flex-row lg:justify-end gap-4">
-              <Button variant={"outline"} type="reset">
+              <Button
+                disabled={isCreatingRoute}
+                variant={"outline"}
+                type="reset"
+              >
                 Reset form
               </Button>
-              <Button type="submit">Save</Button>
+              <Button isLoading={isCreatingRoute} type="submit">
+                Save
+              </Button>
             </div>
           )}
         </form>

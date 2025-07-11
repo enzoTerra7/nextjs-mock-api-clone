@@ -6,11 +6,14 @@ const createRouteUseCase = TestingDiContainer.get("CreateRouteUseCase");
 
 it("returns the created Route", async () => {
   const route = await createRouteUseCase.execute({
-    data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+    data_builder_types: "AI",
     project_id: "aFWlYv0hs7Y9sAXvu8WydPrHftM",
     route_path: "my-route/1",
     route_type: "GET",
     user_id: signInUserInfo.id,
+    schema: {
+      content: "",
+    },
   });
 
   expect(route).toHaveProperty("id");
@@ -22,18 +25,21 @@ it("returns the created Route", async () => {
   expect(route.project_id).toBe("aFWlYv0hs7Y9sAXvu8WydPrHftM");
   expect(route.route_path).toBe("my-route/1");
   expect(route.route_type).toBe("GET");
-  expect(route.data_builder_id).toBe("aE8w6-00FunCDP-uy_uHGUn2zqs");
+  expect(route.data_builder_types).toBe("aE8w6-00FunCDP-uy_uHGUn2zqs");
 });
 
 it("throws for invalid input because of invalid user_id", () => {
   expect(
     async () =>
       await createRouteUseCase.execute({
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "FAKER",
         project_id: "aFWlYv0hs7Y9sAXvu8WydPrHftM",
         route_path: "my-route/1",
         route_type: "GET",
         user_id: "invalid_user",
+        schema: {
+          content: "",
+        },
       })
   ).rejects.toBeInstanceOf(BadRequestError);
 });
@@ -42,11 +48,14 @@ it("throws for invalid input because of invalid project_id", () => {
   expect(
     async () =>
       await createRouteUseCase.execute({
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "AI",
         project_id: "invalid_id",
         route_path: "my-route/1",
         route_type: "GET",
         user_id: signInUserInfo.id,
+        schema: {
+          content: "",
+        },
       })
   ).rejects.toBeInstanceOf(BadRequestError);
 });

@@ -3,7 +3,7 @@ export type Routes = {
   route_type: string;
   schema: Record<string, string>;
   project_id: string;
-  data_builder_id: string;
+  data_builder_types: string;
   created_at: string;
   route_path: string;
 };

@@ -4,7 +4,6 @@ import { IProjectsRepository } from "@/src/application/repositories/projects.rep
 import { IProjectInputCreate } from "@/src/application/validators/project/project.input.create";
 import { Project } from "@/src/domain/entities/models/project.entities";
 import { generateKSUID } from "@/shared/generate_id";
-import { ProjectsSchema } from "../../database/schemas";
 import { IProjectInputDelete } from "@/src/application/validators/project/project.input.delete";
 import { NotFoundError } from "@/src/domain/entities/errors/payload";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
@@ -13,14 +12,13 @@ export class KnexProjectsRepository implements IProjectsRepository {
   constructor() {}
 
   async createProject(input: IProjectInputCreate): Promise<Project> {
-    const project = await knexDb("projects")
+    const [project] = await knexDb("projects")
       .insert({
         name: input.name,
         user_id: input.user_id,
         id: generateKSUID(),
       })
-      .returning("*")
-      .first<ProjectsSchema>();
+      .returning("*");
 
     const projectDto = Project.create({
       id: project.id,

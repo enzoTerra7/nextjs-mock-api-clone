@@ -24,7 +24,7 @@ const aiSchema = z.object({
     .refine(
       (schema) => schema.includes("type Response ="),
       "Please, add a type called Response"
-    ), // texto livre
+    ),
 });
 
 export const createRouteSchema = z.discriminatedUnion("data_builder_id", [
