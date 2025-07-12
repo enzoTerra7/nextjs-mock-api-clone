@@ -1,6 +1,9 @@
 import { RoutesType } from "@/src/domain/entities/models/routes-type.entities";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
-import { IRoutesInputCreate } from "../validators/routes/route.input.create";
+import {
+  IRoutesInputCreate,
+  IRoutesInputEdit,
+} from "../validators/routes/route.input.create";
 import { IRoutesInputDelete } from "../validators/routes/route.input.delete";
 import { IRoutesInputValidateProject } from "../validators/routes/route.input.validate-project";
 
@@ -12,6 +15,7 @@ export interface IRoutesRepository {
   getRoute(route_id: string): Promise<Routes>;
 
   createRoute(input: IRoutesInputCreate): Promise<Routes>;
+  editRoute(input: IRoutesInputEdit): Promise<Routes>;
   deleteRoute(input: IRoutesInputDelete): Promise<void>;
 
   validateProject(input: IRoutesInputValidateProject): Promise<boolean>;

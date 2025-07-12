@@ -7,7 +7,10 @@ import {
   NotFoundError,
 } from "@/src/domain/entities/errors/payload";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
-import { IRoutesInputCreate } from "@/src/application/validators/routes/route.input.create";
+import {
+  IRoutesInputCreate,
+  IRoutesInputEdit,
+} from "@/src/application/validators/routes/route.input.create";
 import { IRoutesInputDelete } from "@/src/application/validators/routes/route.input.delete";
 import { IRoutesInputValidateProject } from "@/src/application/validators/routes/route.input.validate-project";
 import { routesTable } from "../../database/schemas";
@@ -94,11 +97,34 @@ export class DrizzleRoutesRepository implements IRoutesRepository {
     const [route] = await DrizzleDb.insert(routesTable)
       .values({
         project_id: input.project_id,
-        data_builder_id: input.data_builder_id,
+        data_builder_types: input.data_builder_types,
         route_path: input.route_path,
         route_type: input.route_type,
         schema: {},
       })
+      .returning();
+
+    return route as Routes;
+  }
+  async editRoute(input: IRoutesInputEdit): Promise<Routes> {
+    const isAValidProject = await this.validateProject({
+      project_id: input.project_id,
+      user_id: input.user_id,
+    });
+
+    if (!isAValidProject) {
+      throw new BadRequestError("Invalid body");
+    }
+
+    const [route] = await DrizzleDb.update(routesTable)
+      .set({
+        project_id: input.project_id,
+        data_builder_types: input.data_builder_types,
+        route_path: input.route_path,
+        route_type: input.route_type,
+        schema: {},
+      })
+      .where(eq(routesTable.id, input.route_id))
       .returning();
 
     return route as Routes;

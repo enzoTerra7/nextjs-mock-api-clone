@@ -18,6 +18,7 @@ import { GetProjectRoutesUseCase } from "../application/use-cases/projects/get-p
 import { IDataBuilderRepository } from "../application/repositories/data-builder.repository.interface";
 import { GetAllDataBuilderTypesUseCase } from "../application/use-cases/data-builder/get-all-types";
 import { GetAllBuildersByTypeUseCase } from "../application/use-cases/data-builder/get-all-builders-by-type";
+import { EditRouteUseCase } from "../application/use-cases/routes/edit";
 
 export interface DI_RETURN_TYPES {
   // Repositories
@@ -33,6 +34,7 @@ export interface DI_RETURN_TYPES {
   GetProjectByIdUseCase: GetProjectByIdUseCase;
   GetProjectRoutesUseCase: GetProjectRoutesUseCase;
   CreateProjectsUseCase: CreateProjectsUseCase;
+  EditRouteUseCase: EditRouteUseCase;
   DeleteProjectsUseCase: DeleteProjectsUseCase;
 
   CreateRouteUseCase: CreateRouteUseCase;

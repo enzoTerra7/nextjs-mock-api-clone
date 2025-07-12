@@ -8,3 +8,7 @@ export type IRoutesInputCreate = {
     content: string;
   };
 };
+
+export type IRoutesInputEdit = IRoutesInputCreate & {
+  route_id: string;
+};

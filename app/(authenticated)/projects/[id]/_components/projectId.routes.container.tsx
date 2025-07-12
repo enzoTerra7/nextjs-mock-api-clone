@@ -6,12 +6,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/app/_components/ui/accordion";
-import { Button } from "@/app/_components/ui/button";
+import { Button, buttonVariants } from "@/app/_components/ui/button";
 import { cn } from "@/app/_lib/utils";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
 import { Eye, Trash } from "lucide-react";
 import { use } from "react";
 import { ProjectIdRouteModalDelete } from "./projectId.routes.delete";
+import Link from "next/link";
 
 const routesTypeColor = {
   GET: "bg-emerald-100 dark:bg-emerald-900",
@@ -71,9 +72,15 @@ function ProjectRoutes({
             >
               <p className="text-lg font-medium">{route.route_path}</p>
               <div className="flex items-center gap-2">
-                <Button variant={"outline"} size={"icon"}>
+                <Link
+                  href={`/projects/${route.project_id}/edit/${route.id}`}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "icon",
+                  })}
+                >
                   <Eye />
-                </Button>
+                </Link>
                 <ProjectIdRouteModalDelete
                   project_id={route.project_id}
                   route_id={route.id}

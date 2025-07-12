@@ -7,7 +7,10 @@ import {
   NotFoundError,
 } from "@/src/domain/entities/errors/payload";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
-import { IRoutesInputCreate } from "@/src/application/validators/routes/route.input.create";
+import {
+  IRoutesInputCreate,
+  IRoutesInputEdit,
+} from "@/src/application/validators/routes/route.input.create";
 import { IRoutesInputDelete } from "@/src/application/validators/routes/route.input.delete";
 import { IRoutesInputValidateProject } from "@/src/application/validators/routes/route.input.validate-project";
 import { generateKSUID } from "@/shared/generate_id";
@@ -90,6 +93,30 @@ export class KnexRoutesRepository implements IRoutesRepository {
         route_type: input.route_type,
         schema: input.schema,
         id: generateKSUID(),
+      })
+      .returning("*");
+
+    return route!;
+  }
+
+  async editRoute(input: IRoutesInputEdit): Promise<Routes> {
+    const isAValidProject = await this.validateProject({
+      project_id: input.project_id,
+      user_id: input.user_id,
+    });
+
+    if (!isAValidProject) {
+      throw new BadRequestError("Invalid body");
+    }
+
+    const [route] = await knexDb("routes")
+      .where("id", input.route_id)
+      .update({
+        project_id: input.project_id,
+        data_builder_types: input.data_builder_types,
+        route_path: input.route_path,
+        route_type: input.route_type,
+        schema: input.schema,
       })
       .returning("*");
 

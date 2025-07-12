@@ -19,6 +19,7 @@ import { getProjectRoutesUseCaseFactory } from "./factories/use-cases/projects/g
 import { createDataBuilderRepositoryFactory } from "./factories/repositories/data-builder.repository.factory";
 import { getAllBuildersTypeUseCase } from "./factories/use-cases/data-builder/get-all-types";
 import { getAllBuildersByTypeUseCase } from "./factories/use-cases/data-builder/get-all-builders-by-types";
+import { editRouteUseCaseFactory } from "./factories/use-cases/routes/edit.use-case.factory";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -56,6 +57,9 @@ const resolver: {
   },
   get CreateRouteUseCase() {
     return createRouteUseCaseFactory(this.RoutesRepository);
+  },
+  get EditRouteUseCase() {
+    return editRouteUseCaseFactory(this.RoutesRepository);
   },
   get DeleteRouteUseCase() {
     return deleteRouteUseCaseFactory(this.RoutesRepository);
