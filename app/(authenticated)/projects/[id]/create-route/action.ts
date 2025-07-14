@@ -6,6 +6,7 @@ import { createServerAction } from "zsa";
 import { createRouteSchema } from "./definitions";
 import { verifySession } from "@/app/_lib/auth/dal";
 import z from "zod";
+import { revalidatePath } from "next/cache";
 
 export const getAllBuildersType = cache(async () => {
   const getAllBuildersUseCase = DiContainer.get("GetAllBuildersTypeUseCase");
@@ -57,4 +58,6 @@ export const createRoute = createServerAction()
       user_id: session.userId,
       schema,
     });
+
+    revalidatePath(`/projects/${input.project_id}`, "page")
   });
