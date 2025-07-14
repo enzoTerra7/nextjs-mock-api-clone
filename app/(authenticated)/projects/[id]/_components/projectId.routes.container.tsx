@@ -13,6 +13,13 @@ import { Eye, Trash } from "lucide-react";
 import { use } from "react";
 import { ProjectIdRouteModalDelete } from "./projectId.routes.delete";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/_components/ui/tooltip";
+import { toast } from "sonner";
 
 const routesTypeColor = {
   GET: "bg-emerald-100 dark:bg-emerald-900",
@@ -52,6 +59,19 @@ function ProjectRoutes({
   routes: Routes[];
   route_type: string;
 }) {
+  function generateUrl(route: Routes) {
+    const normalizeRoutePath = route.route_path.split("/");
+
+    const urlPath =
+      normalizeRoutePath[0].length > 1
+        ? normalizeRoutePath[0]
+        : normalizeRoutePath[1];
+    const path = `/api/${route.project_id}/${route.id}/${urlPath}`;
+
+    navigator.clipboard.writeText(path);
+
+    toast.success("Successfully copied url");
+  }
   return (
     <>
       <AccordionItem
@@ -66,11 +86,23 @@ function ProjectRoutes({
           {routes.map((route) => (
             <div
               className={cn(
-                "flex items-center border-b border-accent/95 last:border-none justify-between w-full px-2 py-3.5 hover:bg-card/45 rounded-md"
+                "flex items-center border-b p-2 border-accent/95 last:border-none justify-between w-full gap-4 rounded-md"
               )}
               key={route.id}
             >
-              <p className="text-lg font-medium">{route.route_path}</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger
+                    onClick={() => generateUrl(route)}
+                    className="p-1.5 w-full text-start rounded-md hover:bg-card/45"
+                  >
+                    <p className="text-lg font-medium">{route.route_path}</p>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Click to copy the url from this route
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <div className="flex items-center gap-2">
                 <Link
                   href={`/projects/${route.project_id}/edit/${route.id}`}
