@@ -21,11 +21,11 @@ it("returns the created Route", async () => {
   expect(route).toHaveProperty("route_path");
   expect(route).toHaveProperty("schema");
   expect(route).toHaveProperty("project_id");
-  expect(route).toHaveProperty("data_builder_id");
+  expect(route).toHaveProperty("data_builder_types");
   expect(route.project_id).toBe("aFWlYv0hs7Y9sAXvu8WydPrHftM");
   expect(route.route_path).toBe("my-route/1");
   expect(route.route_type).toBe("GET");
-  expect(route.data_builder_types).toBe("aE8w6-00FunCDP-uy_uHGUn2zqs");
+  expect(route.data_builder_types).toBe("AI");
 });
 
 it("throws for invalid input because of invalid user_id", () => {

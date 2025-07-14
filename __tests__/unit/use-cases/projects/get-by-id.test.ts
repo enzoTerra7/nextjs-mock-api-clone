@@ -10,7 +10,6 @@ it("returns all users project", async () => {
   });
 
   expect(project).toHaveProperty("id");
-  expect(project).toHaveProperty("routes");
   expect(project).toHaveProperty("user_id");
   expect(project.id).toBe(projectInfo.id);
   expect(project.user_id).toBe(projectInfo.user_id);

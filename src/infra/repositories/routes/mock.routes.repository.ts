@@ -12,7 +12,10 @@ import { IRoutesRepository } from "@/src/application/repositories/routes.reposit
 import { IRoutesInputValidateProject } from "@/src/application/validators/routes/route.input.validate-project";
 import { RoutesType } from "@/src/domain/entities/models/routes-type.entities";
 import { Routes } from "@/src/domain/entities/models/routes.entities";
-import { IRoutesInputCreate } from "@/src/application/validators/routes/route.input.create";
+import {
+  IRoutesInputCreate,
+  IRoutesInputEdit,
+} from "@/src/application/validators/routes/route.input.create";
 import { IRoutesInputDelete } from "@/src/application/validators/routes/route.input.delete";
 
 export class MockRoutesRepository implements IRoutesRepository {
@@ -69,7 +72,7 @@ export class MockRoutesRepository implements IRoutesRepository {
     this._routes = [
       {
         created_at: new Date().toISOString(),
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "aE8w6-00FunCDP-uy_uHGUn2zqs",
         id: "aGADdPdr769Gph7MFESVqSGo-d0",
         project_id: "aFWlYv0hs7Y9sAXvu8WydPrHftM",
         route_path: "my-route/1",
@@ -78,7 +81,7 @@ export class MockRoutesRepository implements IRoutesRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "aE8w6-00FunCDP-uy_uHGUn2zqs",
         id: "aGADdObVVNNJU1Yzew-9uMb5RNM",
         project_id: "aFWlYmwmuKuCbejOpYrZrWV_GcU",
         route_path: "my-route/2",
@@ -87,7 +90,7 @@ export class MockRoutesRepository implements IRoutesRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "aE8w6-00FunCDP-uy_uHGUn2zqs",
         id: "aGADdGyfRaXI0Cv9crGa04qguW4",
         project_id: "aFWlYnVYqANPg8zJsluWKMcii2U",
         route_path: "my-route/1",
@@ -96,7 +99,7 @@ export class MockRoutesRepository implements IRoutesRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: "aE8w6-00FunCDP-uy_uHGUn2zqs",
+        data_builder_types: "aE8w6-00FunCDP-uy_uHGUn2zqs",
         id: "aGADdIFk6Qe7zaelDkT2ooUDQ-k",
         project_id: "aFWlYuLjrLi8KT41AkBODLvsSc8",
         route_path: "my-route/4",
@@ -170,17 +173,44 @@ export class MockRoutesRepository implements IRoutesRepository {
 
     const route: RoutesSchema = {
       project_id: input.project_id,
-      data_builder_id: input.data_builder_id,
+      data_builder_types: input.data_builder_types,
       route_path: input.route_path,
       route_type: input.route_type,
       id: generateKSUID(),
       created_at: new Date().toISOString(),
-      schema: {},
+      schema: {
+        content: "",
+      },
     };
 
     this._routes.push(route);
 
     return route!;
+  }
+
+  async editRoute(input: IRoutesInputEdit): Promise<Routes> {
+    const isAValidProject = await this.validateProject({
+      project_id: input.project_id,
+      user_id: input.user_id,
+    });
+
+    if (!isAValidProject) {
+      throw new BadRequestError("Invalid body");
+    }
+
+    const routeIndex = this._routes.findIndex(
+      (route) => route.id === input.route_id
+    );
+
+    this._routes[routeIndex] = {
+      ...this._routes[routeIndex],
+      data_builder_types: input.data_builder_types,
+      route_path: input.route_path,
+      route_type: input.route_type,
+      schema: input.schema,
+    };
+
+    return this._routes[routeIndex];
   }
 
   async deleteRoute(input: IRoutesInputDelete): Promise<void> {

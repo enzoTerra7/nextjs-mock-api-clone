@@ -19,6 +19,8 @@ import { GetProjectByIdUseCase } from "@/src/application/use-cases/projects/get-
 import { GetProjectRoutesUseCase } from "@/src/application/use-cases/projects/get-project-routes";
 import { MockDataBuilderRepository } from "@/src/infra/repositories/data-builder/mock.data-builder.repository";
 import { GetAllDataBuilderTypesUseCase } from "@/src/application/use-cases/data-builder/get-all-types";
+import { EditRouteUseCase } from "@/src/application/use-cases/routes/edit";
+import { GetAllBuildersByTypeUseCase } from "@/src/application/use-cases/data-builder/get-all-builders-by-type";
 
 const resolver: {
   [key in keyof DI_RETURN_TYPES]: DI_RETURN_TYPES[key];
@@ -56,6 +58,12 @@ const resolver: {
   },
   get CreateRouteUseCase() {
     return new CreateRouteUseCase(this.RoutesRepository);
+  },
+  get EditRouteUseCase() {
+    return new EditRouteUseCase(this.RoutesRepository);
+  },
+  get GetAllBuildersByTypeUseCase() {
+    return new GetAllBuildersByTypeUseCase(this.DataBuilderRepository);
   },
   get DeleteRouteUseCase() {
     return new DeleteRouteUseCase(this.RoutesRepository);
