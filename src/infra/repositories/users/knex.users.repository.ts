@@ -7,7 +7,7 @@ import { UsersSchema } from "../../database/schemas";
 import { generateKSUID } from "@/shared/generate_id";
 
 export class KnexUsersRepository implements IUsersRepository {
-  constructor() {}
+  constructor() { }
   async getUserById(id: string): Promise<User | undefined> {
     const user = await knexDb("users")
       .select("*")
@@ -65,7 +65,7 @@ export class KnexUsersRepository implements IUsersRepository {
   }
 
   async createUser(input: IUserInputCreate): Promise<User> {
-    const user = await knexDb("users")
+    const [user] = await knexDb("users")
       .insert({
         username: input.username,
         email: input.email,

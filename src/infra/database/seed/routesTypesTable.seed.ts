@@ -1,10 +1,10 @@
-import { db } from "../drizzle";
+import { DrizzleDb } from "../drizzle";
 import { routesTypesTable } from "../schemas";
 
 export async function routesTypesTableSeed() {
   console.log(`Running routesTypesTable seed...`);
 
-  await db.insert(routesTypesTable).values([
+  await DrizzleDb.insert(routesTypesTable).values([
     {
       name: "POST",
     },

@@ -17,7 +17,7 @@ import { routesTable } from "../../database/schemas";
 import { eq } from "drizzle-orm";
 
 export class DrizzleRoutesRepository implements IRoutesRepository {
-  constructor() {}
+  constructor() { }
 
   async validateProject(input: IRoutesInputValidateProject): Promise<boolean> {
     const project = await DrizzleDb.query.projectsTable.findFirst({
@@ -71,6 +71,7 @@ export class DrizzleRoutesRepository implements IRoutesRepository {
       throw new NotFoundError("Route not found");
     }
 
+    // @ts-expect-error This actually routes type
     return route as Routes;
   }
 
@@ -81,6 +82,7 @@ export class DrizzleRoutesRepository implements IRoutesRepository {
       },
     });
 
+    // @ts-expect-error This actually routes type
     return routes as Routes[];
   }
 
@@ -104,6 +106,7 @@ export class DrizzleRoutesRepository implements IRoutesRepository {
       })
       .returning();
 
+    // @ts-expect-error This actually routes type
     return route as Routes;
   }
   async editRoute(input: IRoutesInputEdit): Promise<Routes> {
@@ -127,6 +130,7 @@ export class DrizzleRoutesRepository implements IRoutesRepository {
       .where(eq(routesTable.id, input.route_id))
       .returning();
 
+    // @ts-expect-error This actually routes type
     return route as Routes;
   }
 

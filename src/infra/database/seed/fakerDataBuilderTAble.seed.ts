@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { db } from "../drizzle";
+import { DrizzleDb } from "../drizzle";
 import { dataBuildersTable } from "../schemas";
 
 const desiredModules: Array<keyof typeof faker> = [
@@ -34,7 +34,7 @@ const desiredModules: Array<keyof typeof faker> = [
 
 const dataBuilder: Array<{
   name: string;
-  dataBuilderTypeId: "FAKER";
+  data_builder_type_id: "FAKER";
 }> = [];
 
 async function mapAllDesiredFakerModules() {
@@ -46,7 +46,7 @@ async function mapAllDesiredFakerModules() {
     for (const [workableFunctionKey] of workableModuleTransformed) {
       dataBuilder.push({
         name: `${desiredModule}.${workableFunctionKey}`,
-        dataBuilderTypeId: "FAKER",
+        data_builder_type_id: "FAKER",
       });
     }
   }
@@ -58,7 +58,7 @@ export async function FakerDataBuilderTableSeed() {
   await mapAllDesiredFakerModules();
   console.log("All modules generated");
   console.log(dataBuilder);
-  console.log("Start to up modules to db");
-  await db.insert(dataBuildersTable).values(dataBuilder);
+  console.log("Start to up modules to DrizzleDb");
+  await DrizzleDb.insert(dataBuildersTable).values(dataBuilder);
   console.log("✅ FakerDataBuilderTableSeed seeder executed!");
 }

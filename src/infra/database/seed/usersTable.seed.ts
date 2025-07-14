@@ -1,5 +1,5 @@
 import { UsersSchema, usersTable } from "./../schemas/user";
-import { db } from "../drizzle";
+import { DrizzleDb } from "../drizzle";
 import { CryptoService } from "../../services/crypto/crypto.service";
 import { faker } from "@faker-js/faker";
 
@@ -33,7 +33,7 @@ export async function usersTableSeed() {
     });
   }
 
-  await db.insert(usersTable).values(users);
+  await DrizzleDb.insert(usersTable).values(users);
 
   console.log("✅ User seeder executed!");
 

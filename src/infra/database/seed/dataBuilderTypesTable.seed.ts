@@ -1,10 +1,10 @@
-import { db } from "../drizzle";
+import { DrizzleDb } from "../drizzle";
 import { dataBuilderTypesTable } from "../schemas";
 
 export async function dataBuilderTypesTableSeed() {
   console.log(`Running dataBuilderTypesTable seed...`);
 
-  await db.insert(dataBuilderTypesTable).values([
+  await DrizzleDb.insert(dataBuilderTypesTable).values([
     {
       name: "FAKER",
     },

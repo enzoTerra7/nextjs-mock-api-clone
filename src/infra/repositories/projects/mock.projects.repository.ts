@@ -114,7 +114,7 @@ export class MockProjectsRepository implements IProjectsRepository {
     const routes: Routes[] = [
       {
         created_at: new Date().toISOString(),
-        data_builder_id: generateKSUID(),
+        data_builder_types: generateKSUID(),
         id: generateKSUID(),
         project_id: id,
         route_path: generateKSUID(),
@@ -123,7 +123,7 @@ export class MockProjectsRepository implements IProjectsRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: generateKSUID(),
+        data_builder_types: generateKSUID(),
         id: generateKSUID(),
         project_id: id,
         route_path: generateKSUID(),
@@ -132,7 +132,7 @@ export class MockProjectsRepository implements IProjectsRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: generateKSUID(),
+        data_builder_types: generateKSUID(),
         id: generateKSUID(),
         project_id: id,
         route_path: generateKSUID(),
@@ -141,7 +141,7 @@ export class MockProjectsRepository implements IProjectsRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: generateKSUID(),
+        data_builder_types: generateKSUID(),
         id: generateKSUID(),
         project_id: id,
         route_path: generateKSUID(),
@@ -150,7 +150,7 @@ export class MockProjectsRepository implements IProjectsRepository {
       },
       {
         created_at: new Date().toISOString(),
-        data_builder_id: generateKSUID(),
+        data_builder_types: generateKSUID(),
         id: generateKSUID(),
         project_id: id,
         route_path: generateKSUID(),
