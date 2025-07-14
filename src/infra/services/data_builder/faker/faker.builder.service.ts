@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { IBuilderService } from "../builder.service.definition";
+import { generateKSUID } from "@/shared/generate_id";
 
 type ConstructorField = {
   key: string;
@@ -30,6 +31,8 @@ export class FakerBuilderService implements IBuilderService {
     }>
   ): Record<string, string> {
     const result: Record<string, string> = {};
+
+    result.id = generateKSUID()
 
     for (const { key, path } of constructorPaths) {
       let current: unknown = faker;
